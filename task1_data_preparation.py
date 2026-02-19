@@ -211,8 +211,13 @@ print("\n" + "="*80)
 print("STEP 7: Summary Statistics")
 print("="*80)
 
-# Variables for summary
-surprise_vars = ['STMT', 'MP1', 'MP2']
+# Convert surprise measures to bps for consistent reporting
+merged['STMT_bps'] = merged['STMT'] * 100
+merged['MP1_bps'] = merged['MP1'] * 100
+merged['MP2_bps'] = merged['MP2'] * 100
+
+# Variables for summary (use bps versions for surprises)
+surprise_vars = ['STMT_bps', 'MP1_bps', 'MP2_bps']
 fx_vars = [f'd_{c}' for c in fx_currencies]
 treasury_vars = ['d_UST_2Y', 'd_UST_5Y', 'd_UST_10Y']
 be_vars = ['d_BE_5Y', 'd_BE_10Y']
@@ -224,15 +229,19 @@ summary['N'] = merged[all_vars].notna().sum()
 summary = summary[['N', 'mean', 'std', 'min', '25%', '50%', '75%', 'max']]
 summary.columns = ['N', 'Mean', 'Std', 'Min', 'P25', 'Median', 'P75', 'Max']
 
+# Rename for clarity
+summary.index = summary.index.str.replace('_bps', ' (bps)')
+
 print("\nSummary Statistics:")
 print(summary.round(4).to_string())
 
 # Save summary statistics
 summary.round(4).to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/summary_statistics.csv')
 
-# Also save as LaTeX
-summary.round(3).to_latex('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table1_summary_stats.tex',
-                          caption='Summary Statistics: Asset Price Changes on FOMC Announcement Days',
+# Also save as LaTeX with better formatting
+latex_summary = summary.round(3)
+latex_summary.to_latex('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table1_summary_stats.tex',
+                          caption='Summary Statistics: Monetary Policy Surprises and Asset Price Changes on FOMC Days (1994--2026)',
                           label='tab:summary',
                           float_format='%.3f')
 print("\nSaved: Output/summary_statistics.csv")
