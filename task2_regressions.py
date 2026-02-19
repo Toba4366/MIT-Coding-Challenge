@@ -234,7 +234,8 @@ def create_latex_table(df):
     latex.append("\\hline")
     latex.append("\\multicolumn{6}{p{11cm}}{\\footnotesize \\textit{Notes:} "
                 "Robust (HC1) standard errors in parentheses. "
-                "$\\beta$ represents the response to a 1 basis point STMT surprise. "
+                "STMT is expressed in basis points; $\\beta$ represents the asset response to a 1 bp statement surprise. "
+                "Exchange rate responses are small and imprecisely estimated in daily data. "
                 "Sample: FOMC announcement days, 1994--2026. "
                 "*** $p<0.01$, ** $p<0.05$, * $p<0.10$.} \\\\")
     latex.append("\\end{tabular}")
