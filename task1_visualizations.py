@@ -196,9 +196,61 @@ plt.close()
 print("  Saved: Output/figure4_stmt_validation.png")
 
 # ============================================================================
-# FIGURE 5: Surprise Volatility by Period
+# FIGURE 5: Event-day Scatter - Δ2Y vs Δ10Y colored by STMT sign
 # ============================================================================
-print("\nCreating Figure 5: Volatility by period...")
+print("\nCreating Figure 5: Event-day scatter (Δ2Y vs Δ10Y by STMT sign)...")
+
+fig, ax = plt.subplots(figsize=(10, 8))
+
+# Create color based on STMT sign
+valid = merged[['STMT', 'd_UST_2Y', 'd_UST_10Y']].dropna()
+colors = ['crimson' if s > 0 else 'steelblue' for s in valid['STMT']]
+sizes = np.abs(valid['STMT']) * 100 * 30 + 20  # Size proportional to |STMT|
+
+scatter = ax.scatter(valid['d_UST_2Y'], valid['d_UST_10Y'], 
+                     c=colors, s=sizes, alpha=0.6, edgecolor='white', linewidth=0.5)
+
+# Add 45-degree line
+lims = [min(ax.get_xlim()[0], ax.get_ylim()[0]), max(ax.get_xlim()[1], ax.get_ylim()[1])]
+ax.plot(lims, lims, 'k--', alpha=0.3, linewidth=1, label='45° line')
+
+# Add zero lines
+ax.axhline(0, color='gray', linestyle='-', linewidth=0.5, alpha=0.5)
+ax.axvline(0, color='gray', linestyle='-', linewidth=0.5, alpha=0.5)
+
+# Create custom legend
+from matplotlib.lines import Line2D
+legend_elements = [
+    Line2D([0], [0], marker='o', color='w', markerfacecolor='crimson', 
+           markersize=10, label='Hawkish (STMT > 0)'),
+    Line2D([0], [0], marker='o', color='w', markerfacecolor='steelblue', 
+           markersize=10, label='Dovish (STMT < 0)'),
+    Line2D([0], [0], linestyle='--', color='black', alpha=0.3, label='45° line')
+]
+ax.legend(handles=legend_elements, loc='upper left', fontsize=10)
+
+ax.set_xlabel('Δ 2Y Treasury Yield (bps)', fontsize=12)
+ax.set_ylabel('Δ 10Y Treasury Yield (bps)', fontsize=12)
+ax.set_title('Treasury Yield Changes on FOMC Days\n(Size = |STMT|, Color = STMT sign)', 
+             fontsize=13, fontweight='bold')
+
+# Add correlation annotation
+corr_2y_10y = valid['d_UST_2Y'].corr(valid['d_UST_10Y'])
+ax.annotate(f'Corr(Δ2Y, Δ10Y) = {corr_2y_10y:.3f}', 
+            xy=(0.95, 0.05), xycoords='axes fraction',
+            ha='right', fontsize=10, 
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
+
+plt.tight_layout()
+plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure5_event_scatter.png', 
+            bbox_inches='tight', facecolor='white')
+plt.close()
+print("  Saved: Output/figure5_event_scatter.png")
+
+# ============================================================================
+# FIGURE 6: Surprise Volatility by Period
+# ============================================================================
+print("\nCreating Figure 6: Volatility by period...")
 
 merged['Year'] = merged['Date'].dt.year
 
@@ -244,10 +296,10 @@ for i, (n, s1, s2) in enumerate(zip(period_df['N'], period_df['STMT_std'], perio
 
 ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure5_volatility_by_period.png', 
+plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure6_volatility_by_period.png', 
             bbox_inches='tight', facecolor='white')
 plt.close()
-print("  Saved: Output/figure5_volatility_by_period.png")
+print("  Saved: Output/figure6_volatility_by_period.png")
 
 # ============================================================================
 # SUMMARY
@@ -261,7 +313,8 @@ Created figures:
   2. figure2_correlation_heatmap.png   - Correlation matrix
   3. figure3_surprise_distributions.png - Histograms
   4. figure4_stmt_validation.png       - STMT vs MP1, STMT vs 2Y Treasury
-  5. figure5_volatility_by_period.png  - Volatility across monetary regimes
+  5. figure5_event_scatter.png         - Δ2Y vs Δ10Y colored by STMT sign
+  6. figure6_volatility_by_period.png  - Volatility across monetary regimes
 
 All figures saved to: Output/
 """)

@@ -229,7 +229,14 @@ print(summary.round(4).to_string())
 
 # Save summary statistics
 summary.round(4).to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/summary_statistics.csv')
+
+# Also save as LaTeX
+summary.round(3).to_latex('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table1_summary_stats.tex',
+                          caption='Summary Statistics: Asset Price Changes on FOMC Announcement Days',
+                          label='tab:summary',
+                          float_format='%.3f')
 print("\nSaved: Output/summary_statistics.csv")
+print("Saved: Output/table1_summary_stats.tex")
 
 # ============================================================================
 # STEP 8: SAVE MERGED DATA
@@ -268,6 +275,26 @@ for col in treasury_vars:
     valid = merged[['STMT', col]].dropna()
     corr = valid['STMT'].corr(valid[col])
     print(f"   STMT vs {col}: {corr:.3f}")
+
+# Conditional means: Economic validation
+print(f"\n5. Conditional means (economic validation):")
+print("   This shows hawkish surprises move yields UP, dovish move them DOWN")
+hawkish = merged[merged['STMT'] > 0]
+dovish = merged[merged['STMT'] < 0]
+print(f"   N(STMT > 0): {len(hawkish)}, N(STMT < 0): {len(dovish)}")
+for col in ['d_UST_2Y', 'd_UST_5Y', 'd_UST_10Y']:
+    mean_hawk = hawkish[col].mean()
+    mean_dove = dovish[col].mean()
+    print(f"   {col}: Mean(STMT>0) = {mean_hawk:+.2f}bps, Mean(STMT<0) = {mean_dove:+.2f}bps")
+
+# Sample coverage by variable
+print(f"\n6. Sample coverage by variable:")
+for col in ['d_EUR', 'd_JPY', 'd_UST_2Y', 'd_BE_5Y', 'd_BE_10Y']:
+    subset = merged[merged[col].notna()]
+    first = subset['Date'].min()
+    last = subset['Date'].max()
+    n = len(subset)
+    print(f"   {col}: {first.date()} to {last.date()} (N={n})")
 
 print("\n" + "="*80)
 print("DATA PREPARATION COMPLETE!")
