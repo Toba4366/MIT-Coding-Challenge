@@ -457,6 +457,21 @@ plt.close()
 print("Saved: Output/figure9_coefficient_plot.png")
 
 # ============================================================================
+# STEP 7: SAVE COUNTRY-SPECIFIC FX BETAS (for Task 3.3)
+# ============================================================================
+
+print("\n" + "="*80)
+print("SAVING COUNTRY-SPECIFIC FX BETAS FOR TASK 3.3")
+print("="*80)
+
+fx_betas = results_df[results_df['asset_class'] == 'FX'][['asset', 'beta', 'se', 'tstat', 'pval', 'N', 'R2']].copy()
+fx_betas = fx_betas.rename(columns={'asset': 'currency'})
+fx_betas = fx_betas.set_index('currency')
+fx_betas.to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/task2_country_betas.csv')
+print("Saved: Output/task2_country_betas.csv")
+print(fx_betas.to_string())
+
+# ============================================================================
 # SUMMARY
 # ============================================================================
 

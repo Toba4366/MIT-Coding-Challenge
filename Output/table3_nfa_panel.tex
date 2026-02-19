@@ -1,0 +1,35 @@
+\begin{table}[htbp]
+\centering
+\caption{Exchange Rate Responses and Net Foreign Assets}
+\label{tab:nfa_panel}
+\begin{tabular}{lcccc}
+\hline\hline
+ & (1) & (2) & (3) & (4) \\
+ & Main & Two-Way & Country & MP1 \\
+ & (Date Cl.) & (Two-Way Cl.) & (Country Cl.) & (Date Cl.) \\
+\hline
+STMT & 0.5978 & 0.5978 & 0.5978*** & \\
+ & (0.6176) & (0.4953) & (0.2160) & \\
+MP1 & & & & -0.0216 \\
+ & & & & (0.4489) \\
+Surprise $\times$ NFA/GDP & 0.0048 & 0.0048 & 0.0048 & 0.0162* \\
+ & (0.0067) & (0.0036) & (0.0051) & (0.0091) \\
+NFA/GDP & -0.0004 & -0.0004** & -0.0004*** & -0.0003 \\
+ & (0.0004) & (0.0002) & (0.0001) & (0.0004) \\
+\hline
+Country FE & Yes & Yes & Yes & Yes \\
+Date Cluster & Yes & Yes & No & Yes \\
+Country Cluster & No & Yes & Yes & No \\
+Observations & 2103 & 2103 & 2103 & 2103 \\
+$R^2$ & 0.0014 & 0.0014 & 0.0014 & 0.0059 \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} Panel regression of daily FX log changes on FOMC event dates.
+NFA/GDP is from Lane \& Milesi-Ferretti (EWN, 2024 update), lagged one year.
+NFA/GDP is demeaned so $\beta_1$ represents the effect at average NFA.
+Column (4) uses MP1 (target surprise) instead of STMT (statement surprise) as robustness.
+*** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\end{tablenotes}
+\end{table}
