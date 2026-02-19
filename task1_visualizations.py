@@ -136,7 +136,7 @@ ax.legend(fontsize=8)
 
 # MP2 distribution
 ax = axes[2]
-ax.hist(merged['MP2']*100, bins=30, edgecolor='white', color='crimson', alpha=0.7)
+ax.hist(merged['MP2']*100, bins=30, edgecolor='white', color='royalblue', alpha=0.7)
 ax.axvline(0, color='red', linestyle='--', linewidth=1.5, label='Zero')
 ax.axvline(merged['MP2'].mean()*100, color='green', linestyle='-', linewidth=1.5, label='Mean')
 ax.set_xlabel('Surprise (bps)', fontsize=10)
