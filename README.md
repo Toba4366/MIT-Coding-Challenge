@@ -171,8 +171,13 @@ MIT Coding Challenge/
 |------|-------------|
 | `writeup.pdf` | **Main submission** (~5 pages text + tables/figures at end) |
 | `writeup_v2.pdf` | Extended version (27 pages) with additional robustness checks |
-| `output.pdf` | Compiled document with all tables and figures |
+| `output.pdf` | Compiled document with all tables, figures, and supplementary materials |
 | `output.tex` | LaTeX source for output.pdf |
+
+### AI Assistance
+
+AI tools were used in this project. Conversation logs are available in `References/AI/` and at:
+- https://chatgpt.com/share/69980c6a-51cc-8012-b12c-9eac1e7f4b44
 
 ---
 
