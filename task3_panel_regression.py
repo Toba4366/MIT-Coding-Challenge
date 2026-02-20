@@ -440,8 +440,10 @@ nfa_avg = panel_long.groupby('currency')['NFA_GDP'].mean()
 shock = 0.10  # 10 bps in decimal (the natural macro unit)
 
 print(f"\nKEY COEFFICIENT: β2 (STMT × NFA/GDP) = {b2:.6f}")
-print(f"  Expected sign: Positive (higher NFA → less depreciation)")
-print(f"  Actual sign: {'Positive ✓' if b2 > 0 else 'Negative ✗'}")
+print(f"  FX convention: e = foreign per USD; Δe > 0 = USD appreciation (foreign depreciation)")
+print(f"  β₂ > 0 means higher NFA → LARGER Δe → MORE foreign depreciation")
+print(f"  Balance-sheet hypothesis (Antolín-Díaz et al. 2023): β₂ < 0 (creditors depreciate LESS)")
+print(f"  Actual sign: {'Positive (opposite to balance-sheet prediction)' if b2 > 0 else 'Negative (consistent with balance-sheet prediction)'}")
 print(f"  p-value (date-clustered): {result_date.pvalues['STMT_x_NFA']:.4f}")
 print(f"  p-value (two-way):        {result_twoway.pvalues['STMT_x_NFA']:.4f}")
 
@@ -665,14 +667,14 @@ x_pad = (x_max - x_min) * 0.25
 ax.set_xlim(x_min - x_pad, x_max + x_pad)
 
 # Annotation — larger text, more offset for visibility
-ax.annotate('Debtor countries\n(more exposed)',
+ax.annotate('Net debtors\n(smaller response)',
             xy=(nfa_avg.min(), country_me[nfa_avg.idxmin()]),
             xytext=(-30, -40), textcoords='offset points',
             fontsize=11, fontstyle='italic', fontweight='bold',
             arrowprops=dict(arrowstyle='->', color='red', lw=2),
             color='red')
 
-ax.annotate('Creditor countries\n(less exposed)',
+ax.annotate('Net creditors\n(larger response)',
             xy=(nfa_avg.max(), country_me[nfa_avg.idxmax()]),
             xytext=(-60, 30), textcoords='offset points',
             fontsize=11, fontstyle='italic', fontweight='bold',
@@ -800,10 +802,19 @@ latex += r"""\hline\hline
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} Panel regression of daily FX log changes on FOMC event dates.
-NFA/GDP is from Lane \& Milesi-Ferretti (EWN, 2024 update), lagged one year.
-NFA/GDP is demeaned so $\beta_1$ represents the effect at average NFA.
-Column (4) uses MP1 (target surprise) instead of STMT (statement surprise) as robustness.
+\item \textit{Notes:} The dependent variable is the log change in the exchange rate
+(foreign per USD) on FOMC announcement days. $\Delta e > 0$ denotes USD appreciation
+(foreign currency depreciation). STMT is the statement surprise; MP1 is the target
+rate surprise, both in basis points. NFA/GDP is from Lane \& Milesi-Ferretti (EWN,
+2024 update), lagged one year and demeaned so $\beta_1$ represents the effect at
+average NFA. \textbf{Standard errors:} Column (1) clusters by FOMC date, the
+preferred specification because STMT$_t$ is identical across currencies on each
+date, inducing cross-sectional correlation \citep{Petersen2009}. Column (2)
+clusters two-way (country $+$ date) as a conservative robustness check.
+Column (3) clusters by country only; while reported for completeness,
+it is inappropriate as it ignores the common-shock structure.
+Sample: 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK)
+$\times$ 269 FOMC events, 1994--2024.
 *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{tablenotes}
 \end{table}
@@ -883,7 +894,8 @@ KEY RESULTS
 ══════════════════════════════════════════════════════════════════════════════════
 
   β2 (STMT × NFA/GDP) = {b2:.6f}  [{sig_label}]
-  Sign: {'Positive (consistent with Antolín-Díaz et al. 2023)' if b2 > 0 else 'Negative (opposite prediction)'}
+  Sign: {'Positive — opposite to balance-sheet hypothesis (creditors should depreciate LESS, i.e. β₂ < 0)' if b2 > 0 else 'Negative — consistent with balance-sheet hypothesis (Antolín-Díaz et al. 2023)'}
+  Convention: Δe > 0 = USD appreciation = foreign depreciation; β₂ > 0 means higher NFA → MORE depreciation
   p-value (date-clustered):  {pval_main:.4f}
   p-value (two-way cluster): {result_twoway.pvalues['STMT_x_NFA']:.4f}
   
@@ -904,24 +916,39 @@ KEY RESULTS
 INTERPRETATION & DISCUSSION
 ══════════════════════════════════════════════════════════════════════════════════
 
-  The interaction coefficient β2 is positive, directionally consistent with the
-  hypothesis that creditor countries experience smaller currency depreciations
-  in response to hawkish Fed surprises (Antolín-Díaz et al. 2023). However,
-  the coefficient is {sig_label} with date-clustered 
-  standard errors (p = {pval_main:.3f}).
+  EXCHANGE RATE CONVENTION:
+    e_{{i,t}} is foreign currency per USD (e.g., JPY/USD).
+    Δe > 0 = USD appreciation = foreign currency depreciation.
+    β₂ > 0 ⟹ higher NFA → LARGER Δe → MORE foreign depreciation.
 
-  A 10 basis point hawkish surprise leads to a {resp_debtor:.4f}% USD appreciation
-  against a country at the 25th percentile of NFA (debtor), compared to
-  {resp_creditor:.4f}% for a country at the 75th percentile (creditor).
+  The interaction coefficient β₂ = {b2:.6f} is positive but {sig_label}
+  under date-clustered inference (p = {pval_main:.3f}). The positive sign
+  indicates that higher-NFA (creditor) currencies experience LARGER USD
+  appreciation (more foreign depreciation) following hawkish Fed surprises.
+  This is OPPOSITE to the balance-sheet channel hypothesis of Antolín-Díaz
+  et al. (2023), which predicts that creditor currencies should depreciate
+  LESS (β₂ < 0) because they have fewer USD-denominated liabilities.
 
-  POSSIBLE EXPLANATIONS FOR IMPRECISION:
+  A 10bp hawkish surprise predicts {resp_debtor:.4f}% depreciation for a
+  debtor at the 25th percentile of NFA, versus {resp_creditor:.4f}% for a
+  creditor at the 75th percentile — the marginal effect is {resp_creditor/resp_debtor:.1f}×
+  larger for creditors. However, this difference is not statistically
+  significant, so we cannot reject either direction.
 
-  1. High-frequency noise: Daily FX data contains substantial non-monetary
-     noise. The R² of ~{r1['R2']:.3f} confirms that FOMC surprises explain very
-     little of daily FX variation. Intraday data (as in Antolín-Díaz et al.)
-     would improve signal-to-noise.
+  COMPARISON TO PRIOR LITERATURE:
 
-  2. Information channel: FOMC statements may simultaneously convey
+  Antolín-Díaz et al. (2023) find creditor countries exhibit SMALLER
+  currency depreciation to U.S. hawkish surprises, consistent with a
+  valuation channel. My point estimate has the opposite sign, but given
+  the imprecision, several factors may explain the discrepancy:
+
+  1. Daily vs. intraday data: Antolín-Díaz use tick-by-tick data in a
+     narrow event window. Daily FX changes embed subsequent news and
+     portfolio rebalancing, diluting the immediate policy effect.
+     The R² of ~{r1['R2']:.3f} confirms that FOMC surprises explain very
+     little of daily FX variation.
+
+  2. Information channel: FOMC statements simultaneously convey
      information about the economic outlook, offsetting the pure rate
      channel. This dual signal dilutes the clean mapping from surprises
      to FX movements.
@@ -933,15 +960,21 @@ INTERPRETATION & DISCUSSION
 
   4. Time-varying exposure: NFA-based exposure may have changed structurally
      (e.g., post-GFC balance sheet expansion, post-2020 reserve accumulation),
-     creating parameter instability that a single β2 cannot capture.
+     creating parameter instability that a single β₂ cannot capture.
 
   5. Small cross-section: With only 8 currencies, the cross-sectional
-     variation in NFA may be insufficient to identify β2 precisely.
+     variation in NFA may be insufficient to identify β₂ precisely.
      This is a fundamental limitation of the G10-based sample.
 
-  Despite the lack of statistical significance, the economic direction is
-  consistent with theory, and the MP1 specification provides marginal
-  supporting evidence (p = {pval_mp1:.3f}).
+  6. Sample period: My sample (1994-2026) includes ZLB, forward guidance,
+     and QE periods where traditional transmission channels may not apply.
+
+  The null result is consistent with NFA not being the primary driver of
+  FX heterogeneity in this sample. Using target rate surprises (MP1) instead
+  yields a marginally significant positive β₂ (p = {pval_mp1:.3f}), suggesting
+  any effect may operate through actual rate changes rather than communication.
+  These findings motivate extensions using intraday data, gross external
+  positions, or expanded currency samples.
 
 ══════════════════════════════════════════════════════════════════════════════════
 NARRATIVE ARC

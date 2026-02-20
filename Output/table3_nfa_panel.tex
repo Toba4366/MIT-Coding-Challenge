@@ -26,10 +26,19 @@ $R^2$ & 0.0014 & 0.0014 & 0.0014 & 0.0059 \\
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} Panel regression of daily FX log changes on FOMC event dates.
-NFA/GDP is from Lane \& Milesi-Ferretti (EWN, 2024 update), lagged one year.
-NFA/GDP is demeaned so $\beta_1$ represents the effect at average NFA.
-Column (4) uses MP1 (target surprise) instead of STMT (statement surprise) as robustness.
+\item \textit{Notes:} The dependent variable is the log change in the exchange rate
+(foreign per USD) on FOMC announcement days. $\Delta e > 0$ denotes USD appreciation
+(foreign currency depreciation). STMT is the statement surprise; MP1 is the target
+rate surprise, both in basis points. NFA/GDP is from Lane \& Milesi-Ferretti (EWN,
+2024 update), lagged one year and demeaned so $\beta_1$ represents the effect at
+average NFA. \textbf{Standard errors:} Column (1) clusters by FOMC date, the
+preferred specification because STMT$_t$ is identical across currencies on each
+date, inducing cross-sectional correlation \citep{Petersen2009}. Column (2)
+clusters two-way (country $+$ date) as a conservative robustness check.
+Column (3) clusters by country only; while reported for completeness,
+it is inappropriate as it ignores the common-shock structure.
+Sample: 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK)
+$\times$ 269 FOMC events, 1994--2024.
 *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
 \end{tablenotes}
 \end{table}
