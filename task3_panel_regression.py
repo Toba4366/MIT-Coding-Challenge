@@ -649,22 +649,34 @@ ax.set_ylabel('Marginal Effect of STMT on FX (%)', fontsize=12, fontweight='bold
 ax.set_title('Figure 11: How Currency Response to U.S. Monetary Policy\n'
              'Varies with Net Foreign Asset Position',
              fontsize=14, fontweight='bold', pad=15)
-ax.legend(fontsize=10, loc='best', frameon=True)
+ax.legend(fontsize=10, loc='upper left', frameon=True)
 ax.grid(alpha=0.3)
 
-# Annotation
+# Zoom y-axis to actual data range (avoid extending to 400)
+all_y_vals = np.concatenate([marginal_effect, ci_lower, ci_upper,
+                             country_me.values])
+y_min, y_max = np.min(all_y_vals), np.max(all_y_vals)
+y_pad = (y_max - y_min) * 0.3
+ax.set_ylim(y_min - y_pad, y_max + y_pad)
+
+# Zoom x-axis to actual NFA data range with padding
+x_min, x_max = nfa_avg.min(), nfa_avg.max()
+x_pad = (x_max - x_min) * 0.25
+ax.set_xlim(x_min - x_pad, x_max + x_pad)
+
+# Annotation — larger text, more offset for visibility
 ax.annotate('Debtor countries\n(more exposed)',
-            xy=(nfa_range[20], marginal_effect[20]),
-            xytext=(nfa_range[20] + 15, marginal_effect[20] + 0.3),
-            fontsize=9, fontstyle='italic',
-            arrowprops=dict(arrowstyle='->', color='red', lw=1.5),
+            xy=(nfa_avg.min(), country_me[nfa_avg.idxmin()]),
+            xytext=(-30, -40), textcoords='offset points',
+            fontsize=11, fontstyle='italic', fontweight='bold',
+            arrowprops=dict(arrowstyle='->', color='red', lw=2),
             color='red')
 
 ax.annotate('Creditor countries\n(less exposed)',
-            xy=(nfa_range[-30], marginal_effect[-30]),
-            xytext=(nfa_range[-30] - 30, marginal_effect[-30] - 0.3),
-            fontsize=9, fontstyle='italic',
-            arrowprops=dict(arrowstyle='->', color='green', lw=1.5),
+            xy=(nfa_avg.max(), country_me[nfa_avg.idxmax()]),
+            xytext=(-60, 30), textcoords='offset points',
+            fontsize=11, fontstyle='italic', fontweight='bold',
+            arrowprops=dict(arrowstyle='->', color='green', lw=2),
             color='green')
 
 plt.tight_layout()
@@ -710,12 +722,12 @@ ax.set_title('Figure 12: Predicted Currency Response\nby Net Foreign Asset Posit
              fontsize=14, fontweight='bold', pad=15)
 ax.grid(axis='y', alpha=0.3)
 
-# Add values on bars
+# Add values on bars — offset right to avoid CI line overlap
 for bar, val, err in zip(bars, responses, errors):
     height = bar.get_height()
     sign = '+' if val > 0 else ''
-    ax.text(bar.get_x() + bar.get_width() / 2., height + 0.002,
-            f'{sign}{val:.4f}%', ha='center', va='bottom',
+    ax.text(bar.get_x() + bar.get_width() * 0.85, height + 0.003,
+            f'{sign}{val:.4f}%', ha='left', va='bottom',
             fontsize=11, fontweight='bold')
 
 plt.tight_layout()
