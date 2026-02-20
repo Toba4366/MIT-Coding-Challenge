@@ -1,0 +1,44 @@
+\begin{table}[htbp]
+\centering
+\caption{VIX Stress Interaction in the Balance-Sheet Channel}
+\label{tab:vix_stress}
+\begin{tabular}{lccc}
+\hline\hline
+ & (1) & (2) & (3) \\
+ & Baseline & STMT + VIX & MP1 + VIX \\
+ & (Date Cl.) & (Date Cl.) & (Date Cl.) \\
+\hline
+STMT & -0.5978 & 0.3647 & \\
+ & (0.6176) & (0.7977) & \\
+MP1 & & & 0.2873 \\
+ & & & (0.6555) \\
+Surprise $\times$ NFA/GDP & -0.0048 & 0.0013 & -0.0136 \\
+ & (0.0067) & (0.0073) & (0.0093) \\
+Surprise $\times$ NFA $\times$ HighVIX & & -0.0194 & -0.0104 \\
+ & & (0.0151) & (0.0231) \\
+NFA/GDP & 0.0004 & 0.0002 & 0.0001 \\
+ & (0.0004) & (0.0003) & (0.0003) \\
+HighVIX & & 0.0881 & 0.0844 \\
+ & & (0.0762) & (0.0775) \\
+HighVIX $\times$ Surprise & & -2.0068 & -0.7505 \\
+ & & (1.4074) & (0.9623) \\
+HighVIX $\times$ NFA/GDP & & 0.0016 & 0.0015 \\
+ & & (0.0009) & (0.0009) \\
+\hline
+Country FE & Yes & Yes & Yes \\
+Date Cluster & Yes & Yes & Yes \\
+Observations & 2103 & 2103 & 2103 \\
+$R^2$ & 0.0014 & 0.0103 & 0.0133 \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} I define $e_{i,t}$ as foreign currency units per USD.
+The dependent variable is the spot return $r_{i,t} = -\Delta\log(e_{i,t})$,
+so $r > 0$ indicates foreign appreciation (USD depreciation).
+HighVIX $= 1$ if VIX $\geq$ 75th percentile of the sample distribution.
+NFA/GDP is demeaned; all specifications include country fixed effects.
+Standard errors clustered by FOMC date.
+*** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\end{tablenotes}
+\end{table}

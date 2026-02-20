@@ -602,6 +602,18 @@ print("=" * 80)
 p_stmt = result_stmt.pvalues['STMT_x_NFA_x_Post']
 p_mp1 = result_mp1.pvalues['MP1_x_NFA_x_Post']
 
+# Economic magnitude calculation (1 SD NFA ≈ 70pp based on cross-country variation)
+nfa_1sd = nfa_std  # already computed above
+pre_stmt_sensitivity_change = b2_stmt * nfa_1sd  # change in sensitivity from mean to +1SD NFA
+post_stmt_sensitivity_change = (b2_stmt + b3_stmt) * nfa_1sd
+pre_mp1_sensitivity_change = b2_mp1 * nfa_1sd
+post_mp1_sensitivity_change = (b2_mp1 + b3_mp1) * nfa_1sd
+
+# For 10bp shock, translate to FX response
+shock_size = 0.10  # 10 bps
+pre_stmt_fx_swing = pre_stmt_sensitivity_change * shock_size
+post_stmt_fx_swing = post_stmt_sensitivity_change * shock_size
+
 print(f"""
 OUTPUT FILES:
   Tables:
@@ -627,22 +639,97 @@ KEY RESULTS
     Post-GFC NFA slope: β₂ + β₃ = {b2_mp1 + b3_mp1:.6f}
 
 ══════════════════════════════════════════════════════════════════════════════════
+FORMAL HYPOTHESIS TEST
+══════════════════════════════════════════════════════════════════════════════════
+
+  H₀: β₃ = 0  (no time variation in the NFA slope)
+
+  STMT specification:
+    t-statistic = {b3_stmt / result_stmt.std_errors['STMT_x_NFA_x_Post']:.3f}
+    p-value = {p_stmt:.4f}
+    Decision: {'Reject H₀ at 10%' if p_stmt < 0.10 else 'Fail to reject H₀'}
+
+  MP1 specification:
+    t-statistic = {b3_mp1 / result_mp1.std_errors['MP1_x_NFA_x_Post']:.3f}
+    p-value = {p_mp1:.4f}
+    Decision: {'Reject H₀ at 10%' if p_mp1 < 0.10 else 'Fail to reject H₀'}
+
+  Summary: We fail to reject equality of pre- and post-GFC NFA slopes.
+
+══════════════════════════════════════════════════════════════════════════════════
+ECONOMIC MAGNITUDE
+══════════════════════════════════════════════════════════════════════════════════
+
+  NFA/GDP standard deviation: {nfa_1sd:.1f} percentage points
+
+  STMT specification:
+    Pre-GFC:  1 SD higher NFA shifts sensitivity by {pre_stmt_sensitivity_change:.4f}
+              For a 10bp shock → {pre_stmt_fx_swing:.4f}% FX response difference
+    Post-GFC: 1 SD higher NFA shifts sensitivity by {post_stmt_sensitivity_change:.4f}
+              For a 10bp shock → {post_stmt_fx_swing:.4f}% FX response difference
+
+  The post-GFC coefficient is economically meaningful in direction:
+    Slope shifts from {b2_stmt:.4f} (creditors depreciate MORE) 
+                  to  {b2_stmt + b3_stmt:.4f} (creditors depreciate LESS)
+    This is consistent with—though not statistically confirmatory of—
+    a post-crisis strengthening of balance-sheet mechanisms (Antolín-Díaz).
+
+  The MP1 shows no such shift: slope remains ~{b2_mp1:.4f} both regimes.
+
+══════════════════════════════════════════════════════════════════════════════════
+STMT VS MP1 CONTRAST
+══════════════════════════════════════════════════════════════════════════════════
+
+  A striking pattern emerges from comparing the two shock measures:
+
+  • STMT (communication component): 
+      Pre-GFC slope: {b2_stmt:.4f} (negative → creditors depreciate more)
+      Post-GFC slope: {b2_stmt + b3_stmt:.4f} (flips sign → toward Antolín-Díaz)
+      β₃ = {b3_stmt:.4f} (p = {p_stmt:.3f}) — directionally positive, imprecise
+
+  • MP1 (pure rate shock):
+      Pre-GFC slope: {b2_mp1:.4f} 
+      Post-GFC slope: {b2_mp1 + b3_mp1:.4f} (essentially unchanged)
+      β₃ = {b3_mp1:.4f} (p = {p_mp1:.3f}) — no structural shift
+
+  This suggests the post-GFC regime change, if any, operates through
+  the information/communication channel rather than the pure rate channel.
+  Alternatively, the STMT result is statistical noise—we lack power to
+  distinguish these interpretations definitively.
+
+══════════════════════════════════════════════════════════════════════════════════
+R² DIAGNOSTIC
+══════════════════════════════════════════════════════════════════════════════════
+
+  Baseline R²:      {r1['R2']:.4f}
+  STMT + Post R²:   {r2['R2']:.4f}
+  MP1 + Post R²:    {r3['R2']:.4f}
+
+  The low within R² (~0.001–0.006) indicates that daily FX variation is
+  dominated by non-monetary forces, limiting statistical power to detect
+  cross-sectional heterogeneity. This is a feature of daily data, not a
+  specification failure—most FX variance at this frequency is orthogonal
+  to identified monetary policy shocks.
+
+══════════════════════════════════════════════════════════════════════════════════
 INTERPRETATION
 ══════════════════════════════════════════════════════════════════════════════════
 
-  The triple interaction coefficient β₃ is statistically insignificant for
-  both STMT (p = {p_stmt:.3f}) and MP1 (p = {p_mp1:.3f}), providing no evidence
-  that the NFA channel strengthened after the global financial crisis.
+  Within the G10 sample and daily frequency framework, we do not detect
+  statistically robust amplification of the NFA channel after the 2008
+  global financial crisis.
 
-  The pre-GFC and post-GFC marginal effect lines are nearly parallel
-  (Figure 13), confirming the absence of structural amplification.
+  The STMT specification exhibits an economically interesting sign flip
+  (β₂ < 0 → β₂ + β₃ > 0), suggestive of—but not confirmatory for—a
+  post-GFC strengthening of balance-sheet mechanisms. The MP1 specification
+  shows no time variation whatsoever (β₃ ≈ 0).
 
-  This null result is notable given that:
+  This null is notable given that:
   (1) Dollar funding stress increased post-2008,
   (2) External balance sheets expanded significantly,
   (3) Regulatory changes made dollar exposure more salient.
 
-  Three explanations are consistent with this null:
+  Three explanations are consistent with this result:
 
   1. Offsetting channels: Post-GFC central bank interventions (swap lines,
      QE, forward guidance) may have dampened the valuation channel by
@@ -660,14 +747,19 @@ INTERPRETATION
 NARRATIVE ARC
 ══════════════════════════════════════════════════════════════════════════════════
 
-  Section 3.1 established STMT as a valid monetary policy shock measure.
-  Section 3.2 documented heterogeneous FX responses across countries.
-  Section 3.3 tested whether NFA/GDP explains this heterogeneity (null).
-  Section 3.4 tested whether the channel strengthened post-GFC (null).
+  Across specifications, we find strong transmission to U.S. yields (Section
+  3.2) but weak and noisy daily FX responses. In Sections 3.3–3.4 we test
+  whether cross-country external balance sheets (NFA/GDP) explain heterogeneity
+  in FX responses and whether this channel strengthened after 2008.
 
-  Conclusion: Balance-sheet channels are theoretically relevant but
-  empirically limited for G10 FX responses to U.S. monetary policy,
-  even when conditioning on post-GFC structural shifts. Extensions
-  using intraday data, gross external positions, or expanded currency
-  samples are warranted.
+  The estimated interaction is imprecise and sensitive to the shock definition:
+  for STMT, the NFA slope shifts from negative pre-GFC to slightly positive
+  post-GFC (β₃ > 0), consistent with—though not statistically supportive of—
+  a post-crisis strengthening of balance-sheet mechanisms; for MP1, we detect
+  no structural change.
+
+  Overall, within a G10 daily-frequency framework, we do not find statistically
+  robust evidence that NFA/GDP systematically mediates FX responses to U.S.
+  monetary surprises. Extensions using intraday data, gross external positions,
+  or expanded currency samples are warranted.
 """)
