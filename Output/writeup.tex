@@ -49,7 +49,7 @@ I estimate currency- and asset-specific regressions:
 \begin{equation}
 \Delta y_{i,t} = \alpha_i + \beta_i \cdot \text{Surprise}_t + \varepsilon_{i,t}
 \end{equation}
-with heteroskedasticity-robust standard errors.
+All regressions use heteroskedasticity-robust (HC1) standard errors. This inference approach is maintained consistently throughout.
 
 \subsection*{Treasury Yields}
 
@@ -61,9 +61,9 @@ Breakeven responses (Table~\ref{tab:treasury}) are smaller in magnitude and less
 
 \subsection*{Exchange Rates}
 
-Table~\ref{tab:fx} reports exchange rate responses. Coefficients are heterogeneous across currencies (ranging from $-1.6$ bps for JPY to $+0.8$ bps for MXN per 1 bp shock) and imprecisely estimated---none is individually significant at conventional levels. $R^2$ values are uniformly below 1\%, indicating daily FX returns are dominated by non-monetary factors. Figure~\ref{fig:fx_coef} visualizes the coefficient heterogeneity.
+Table~\ref{tab:fx} reports exchange rate responses. Coefficients are heterogeneous across currencies (ranging from $-1.6$ bps for JPY to $+0.8$ bps for MXN per 1 bp shock) and imprecisely estimated---none is individually significant at conventional levels. $R^2$ values are uniformly below 1\%, indicating daily FX returns are dominated by non-monetary factors---this is typical in event-study designs, where a single macro-shock explains only a small fraction of daily asset price variation. Figure~\ref{fig:fx_coef} visualizes the coefficient heterogeneity.
 
-\textbf{Interpretation}: The contrast between strong yield responses and noisy FX responses suggests limited power in a daily event-study design for detecting cross-country heterogeneity. This motivates the panel approach in Part 3, which pools information across currencies.
+\textbf{Interpretation}: The contrast between strong yield responses and noisy FX responses suggests limited power in a daily event-study design for detecting cross-country heterogeneity. This motivates the panel approach in Task 3, which pools information across currencies.
 
 %==============================================================================
 \section*{Task 3: The Role of External Positions}
@@ -123,7 +123,7 @@ Given the null results, I assess what effect sizes the data can rule out. The st
 \section*{Conclusion}
 %==============================================================================
 
-U.S. Treasury yields respond strongly to monetary policy surprises, validating the high-frequency identification strategy. Exchange rate responses are noisy and heterogeneous at daily frequency, with $R^2 < 1\%$. Net foreign asset positions do not robustly mediate FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. These null results do not reject the theoretical relevance of balance-sheet channels; rather, they indicate that within a daily-frequency event-study design using 8 advanced-economy currencies, NFA/GDP is not a sufficient statistic for currency exposure to U.S. monetary shocks. Extensions using gross position measures or larger cross-sections of emerging-market currencies may yield sharper identification.
+U.S. Treasury yields respond strongly to monetary policy surprises, validating the high-frequency identification strategy. Exchange rate responses are noisy at daily frequency ($R^2 < 1\%$). Net foreign asset positions do not robustly mediate FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. Crucially, this is a \textbf{credible null}: the 95\% confidence interval rules out economically large NFA-mediated effects (those exceeding 20\% of daily FX volatility), bounding the channel's magnitude at practically relevant levels. These results do not reject balance-sheet theory but indicate that NFA/GDP is not a sufficient statistic for currency exposure to U.S. monetary shocks in this sample. Extensions using gross position measures or emerging-market currencies may yield sharper identification.
 
 \vspace{2em}
 \noindent\rule{\textwidth}{0.4pt}
