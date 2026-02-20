@@ -58,10 +58,11 @@ MIT Coding Challenge/
 │   ├── merged_fomc_data.csv     # Master merged dataset
 │   └── task*_*.csv              # Intermediate results
 │
-└── Scripts (executed by run_all.py):
+└── scripts/                      # All Python analysis scripts
     ├── task1_data_preparation.py  # Merge MPS, FX, yields, NFA
     ├── task1_visualizations.py    # Summary stat figures (fig 1-6)
     ├── task2_regressions.py       # Event-study regressions (fig 7-9)
+    ├── task2_placebo.py           # Placebo test with lead surprises
     ├── task3_panel_regression.py  # NFA × surprise panel (fig 10-12)
     ├── task4_time_variation.py    # Post-GFC regime (fig 13-14)
     ├── task4b_vix_stress.py       # VIX stress interaction (fig 15-16)

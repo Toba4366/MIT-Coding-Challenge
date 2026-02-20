@@ -32,40 +32,40 @@ SCRIPTS = [
     # ─────────────────────────────────────────────────────────────────────────
     # TASK 1: Data Preparation & Visualization
     # ─────────────────────────────────────────────────────────────────────────
-    ("task1_data_preparation.py", "Task 1: Data Preparation — merge MPS shocks, FX, and yields"),
-    ("task1_visualizations.py", "Task 1: Visualizations — summary statistics figures"),
+    ("scripts/task1_data_preparation.py", "Task 1: Data Preparation — merge MPS shocks, FX, and yields"),
+    ("scripts/task1_visualizations.py", "Task 1: Visualizations — summary statistics figures"),
     
     # ─────────────────────────────────────────────────────────────────────────
     # TASK 2: Event-Study Regressions
     # ─────────────────────────────────────────────────────────────────────────
-    ("task2_regressions.py", "Task 2: Event-Study Regressions — FX and yield responses"),
-    ("task2_placebo.py", "Task 2: Placebo Test — falsification with lead shock"),
+    ("scripts/task2_regressions.py", "Task 2: Event-Study Regressions — FX and yield responses"),
+    ("scripts/task2_placebo.py", "Task 2: Placebo Test — falsification with lead shock"),
     
     # ─────────────────────────────────────────────────────────────────────────
     # TASK 3: Panel Regression with NFA Interaction
     # ─────────────────────────────────────────────────────────────────────────
-    ("task3_panel_regression.py", "Task 3: Panel Regression — NFA × monetary policy interaction"),
+    ("scripts/task3_panel_regression.py", "Task 3: Panel Regression — NFA × monetary policy interaction"),
     
     # ─────────────────────────────────────────────────────────────────────────
     # TASK 4: Time Variation & Extensions
     # ─────────────────────────────────────────────────────────────────────────
-    ("task4_time_variation.py", "Task 4: Time Variation — post-GFC regime analysis"),
-    ("task4b_vix_stress.py", "Task 4b: VIX Stress — high-volatility regime interaction"),
+    ("scripts/task4_time_variation.py", "Task 4: Time Variation — post-GFC regime analysis"),
+    ("scripts/task4b_vix_stress.py", "Task 4b: VIX Stress — high-volatility regime interaction"),
 ]
 
 # Optional validation/diagnostic scripts (run after main analyses)
 VALIDATION_SCRIPTS = [
-    ("check_fx_convention.py", "Validation: FX convention check"),
-    ("check_pc_column.py", "Validation: PC column check"),
-    ("sanity_check_scaling.py", "Validation: Scaling sanity check"),
-    ("check_task2.py", "Validation: Task 2 results check"),
+    ("scripts/check_fx_convention.py", "Validation: FX convention check"),
+    ("scripts/check_pc_column.py", "Validation: PC column check"),
+    ("scripts/sanity_check_scaling.py", "Validation: Scaling sanity check"),
+    ("scripts/check_task2.py", "Validation: Task 2 results check"),
 ]
 
 # Additional analysis scripts (supplementary)
 ADDITIONAL_SCRIPTS = [
-    ("analyze_surprises.py", "Additional: Analyze monetary policy surprises"),
-    ("compare_surprise_measures.py", "Additional: Compare STMT vs MP1 vs MP2"),
-    ("final_measure_recommendation.py", "Additional: Final measure recommendation"),
+    ("scripts/analyze_surprises.py", "Additional: Analyze monetary policy surprises"),
+    ("scripts/compare_surprise_measures.py", "Additional: Compare STMT vs MP1 vs MP2"),
+    ("scripts/final_measure_recommendation.py", "Additional: Final measure recommendation"),
 ]
 
 # ============================================================================

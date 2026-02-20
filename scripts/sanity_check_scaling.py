@@ -3,9 +3,13 @@ Sanity Check: Verify STMT scaling by comparing biggest shocks to 2Y Treasury res
 """
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load merged data
-merged = pd.read_csv('Output/merged_fomc_data.csv')
+merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 
 # Use existing STMT_bps column, or create if needed
 if 'STMT_bps' not in merged.columns:

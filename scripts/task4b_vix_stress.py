@@ -35,7 +35,8 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-BASE = os.path.dirname(os.path.abspath(__file__))
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 os.makedirs(f'{BASE}/Output', exist_ok=True)
 
 print("=" * 80)

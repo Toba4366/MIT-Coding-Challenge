@@ -5,8 +5,8 @@ import pandas as pd
 import numpy as np
 import os
 
-# Base directory (relative to script location)
-BASE = os.path.dirname(os.path.abspath(__file__))
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 merged['Date'] = pd.to_datetime(merged['Date'])

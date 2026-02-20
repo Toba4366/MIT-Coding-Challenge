@@ -6,8 +6,8 @@ import pandas as pd
 import numpy as np
 import os
 
-# Base directory (relative to script location)
-BASE = os.path.dirname(os.path.abspath(__file__))
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Load all relevant data
 me = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Monetary Events')

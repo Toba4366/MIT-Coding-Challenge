@@ -12,8 +12,8 @@ from linearmodels.panel import PanelOLS
 import warnings
 warnings.filterwarnings('ignore')
 
-# Base directory (relative to script location)
-BASE = os.path.dirname(os.path.abspath(__file__))
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 print("="*70)
 print("PLACEBO TEST: Does STMT_{t+1} Predict Current FX Returns?")

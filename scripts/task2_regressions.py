@@ -19,8 +19,8 @@ import matplotlib.pyplot as plt
 import os
 from scipy import stats
 
-# Base directory (relative to script location)
-BASE = os.path.dirname(os.path.abspath(__file__))
+# Base directory (parent of scripts/ folder where Data/ and Output/ exist)
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create output directory
 os.makedirs(os.path.join(BASE, 'Output'), exist_ok=True)
