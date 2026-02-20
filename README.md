@@ -53,6 +53,7 @@ MIT Coding Challenge/
 ├── Output/                       # Generated outputs (see detailed list below)
 │   ├── writeup.pdf              # Main submission document
 │   ├── writeup_v2.pdf           # Extended version
+│   ├── output.pdf               # Compiled tables/figures document
 │   ├── table1–8*.tex            # LaTeX tables
 │   ├── figure1–16*.png          # All figures
 │   ├── merged_fomc_data.csv     # Master merged dataset
@@ -170,6 +171,8 @@ MIT Coding Challenge/
 |------|-------------|
 | `writeup.pdf` | **Main submission** (~5 pages text + tables/figures at end) |
 | `writeup_v2.pdf` | Extended version (27 pages) with additional robustness checks |
+| `output.pdf` | Compiled document with all tables and figures |
+| `output.tex` | LaTeX source for output.pdf |
 
 ---
 
