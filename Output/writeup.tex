@@ -31,7 +31,7 @@ The USMPD contains multiple surprise measures constructed from federal funds fut
 
 \subsection*{(b) Primary Measure: STMT}
 
-I use STMT as my baseline surprise measure for three reasons: (1) it summarizes both target rate changes and forward guidance in a single interpretable series; (2) it correlates highly with both MP1 ($\rho = 0.89$) and MP2 ($\rho = 0.73$), capturing multiple dimensions of monetary news; (3) it explains a larger share of Treasury yield variation than MP1 alone ($R^2 = 0.27$ vs.\ 0.14 for the 2-year yield). MP1 serves as a robustness measure focusing narrowly on target rate surprises.
+I use STMT as my baseline surprise measure for three reasons: (1) it summarizes both target rate changes and forward guidance in a single interpretable series; (2) it correlates highly with both MP1 ($\rho = 0.89$) and MP2 ($\rho = 0.73$), capturing multiple dimensions of monetary news (Figure~\ref{fig:corr}); (3) it explains a larger share of Treasury yield variation than MP1 alone ($R^2 = 0.27$ vs.\ 0.14 for the 2-year yield). MP1 serves as a robustness measure focusing narrowly on target rate surprises.
 
 \subsection*{(c) Data Merge}
 
@@ -308,6 +308,13 @@ Equivalent expansion & $\sim$30 currencies \\
 %==============================================================================
 % FIGURES
 %==============================================================================
+
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{figure2_correlation_heatmap.png}
+\caption{\textbf{Correlation Matrix: Monetary Policy Surprise Measures.} STMT correlates highly with MP1 ($\rho = 0.89$) and MP2 ($\rho = 0.73$), justifying its use as the primary measure.}
+\label{fig:corr}
+\end{figure}
 
 \begin{figure}
 \centering
