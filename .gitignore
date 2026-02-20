@@ -4,16 +4,24 @@ Data/nfa_gdp_data.csv
 
 References/S0304407623003500.bib
 
-Output/writeup_v2.ttt
-Output/writeup_v2.toc
-Output/writeup_v2.out
-Output/writeup_v2.log
-Output/writeup_v2.fff
-Output/writeup_v2.aux
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.ttt
+*.fff
+*.toc
+*.bbl
+*.blg
+*.synctex.gz
 
-Output/writeup.ttt
-Output/writeup.out
-Output/writeup.log
-Output/writeup.fff
-Output/writeup.aux
-Output/writeup.toc
+# OS files
+.DS_Store
+**/.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv
+*.egg-info/
