@@ -3,9 +3,17 @@ Data/monetary-policy-surprises.zip
 Data/nfa_gdp_data.csv
 
 References/S0304407623003500.bib
+
 Output/writeup_v2.ttt
 Output/writeup_v2.toc
 Output/writeup_v2.out
 Output/writeup_v2.log
 Output/writeup_v2.fff
 Output/writeup_v2.aux
+
+Output/writeup.ttt
+Output/writeup.out
+Output/writeup.log
+Output/writeup.fff
+Output/writeup.aux
+Output/writeup.toc

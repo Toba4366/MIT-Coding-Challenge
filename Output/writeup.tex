@@ -19,7 +19,7 @@
 \thispagestyle{empty}
 
 \vspace{-1em}
-\noindent\textbf{Replication:} All code and data available at \url{https://github.com/Toba4366/MIT-Coding-Challenge.git}.
+\noindent\textbf{Replication:} Code and data at \url{https://github.com/Toba4366/MIT-Coding-Challenge}
 
 %==============================================================================
 \section{Part 1: Data Preparation and Surprise Measure Selection}
@@ -35,7 +35,7 @@ I use STMT as my baseline surprise measure for three reasons: (1) it summarizes 
 
 \subsection*{(c) Data Merge}
 
-The sample covers 274 FOMC announcements from January 1994 to December 2024. I merge surprises with: (i) daily spot exchange rates for 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK); (ii) Treasury par yields (2Y, 5Y, 10Y) from Treasury.gov; (iii) breakeven inflation rates (5Y, 10Y). Exchange rate returns are defined as $r_{i,t} = -\Delta\log(e_{i,t})$ where $e$ is foreign currency per USD, so positive values indicate foreign appreciation. NFA/GDP data come from Lane and Milesi-Ferretti (2018), matched using lagged annual values to avoid reverse causality.
+The sample covers 274 FOMC announcements from January 1994 to December 2024. I merge surprises with: (i) daily spot exchange rates for 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK); (ii) Treasury par yields (2Y, 5Y, 10Y) from Treasury.gov; (iii) breakeven inflation rates (5Y, 10Y) from FRED TIPS spread series. Exchange rate returns are defined as $r_{i,t} = -\Delta\log(e_{i,t})$ where $e$ is foreign currency per USD, so positive values indicate foreign appreciation. NFA/GDP data come from Lane and Milesi-Ferretti (2018), matched using lagged annual values to avoid reverse causality.
 
 \subsection*{(d) Summary Statistics}
 
@@ -61,7 +61,7 @@ Breakeven responses (Table~\ref{tab:treasury}) are smaller in magnitude and less
 
 \subsection*{Exchange Rates}
 
-Table~\ref{tab:fx} reports exchange rate responses. Coefficients are heterogeneous across currencies (ranging from $-1.6$ bps for JPY to $+0.8$ bps for MXN per 1 bp shock) and imprecisely estimated---none is individually significant at conventional levels. $R^2$ values are uniformly below 1\%, indicating daily FX returns are dominated by non-monetary factors.
+Table~\ref{tab:fx} reports exchange rate responses. Coefficients are heterogeneous across currencies (ranging from $-1.6$ bps for JPY to $+0.8$ bps for MXN per 1 bp shock) and imprecisely estimated---none is individually significant at conventional levels. $R^2$ values are uniformly below 1\%, indicating daily FX returns are dominated by non-monetary factors. Figure~\ref{fig:fx_coef} visualizes the coefficient heterogeneity.
 
 \textbf{Interpretation}: The contrast between strong yield responses and noisy FX responses suggests limited power in a daily event-study design for detecting cross-country heterogeneity. This motivates the panel approach in Part 3, which pools information across currencies.
 
@@ -294,6 +294,13 @@ $H_0: \beta_3 = 0$ & & $p = 0.154$ \\
 \includegraphics[width=0.85\textwidth]{figure11_marginal_effects.png}
 \caption{\textbf{Marginal Effect of STMT Across NFA Distribution.} The 95\% CI includes zero throughout; no evidence that NFA mediates FX responses.}
 \label{fig:marginal}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.85\textwidth]{figure9_coefficient_plot.png}
+\caption{\textbf{Exchange Rate Sensitivity to STMT by Currency.} Coefficients are heterogeneous but none is individually significant. Error bars show 95\% CIs.}
+\label{fig:fx_coef}
 \end{figure}
 
 \end{document}
