@@ -1,0 +1,44 @@
+\begin{table}[htbp]
+\centering
+\caption{Time Variation in the Balance-Sheet Channel}
+\label{tab:time_variation}
+\begin{tabular}{lccc}
+\hline\hline
+ & (1) & (2) & (3) \\
+ & Baseline & STMT + Post-GFC & MP1 + Post-GFC \\
+ & (Date Cl.) & (Date Cl.) & (Date Cl.) \\
+\hline
+STMT & -0.5978 & -0.3937 & \\
+ & (0.6176) & (0.5155) & \\
+MP1 & & & 0.1492 \\
+ & & & (0.3954) \\
+Surprise $\times$ NFA/GDP & -0.0048 & -0.0152* & -0.0160* \\
+ & (0.0067) & (0.0092) & (0.0092) \\
+Surprise $\times$ NFA $\times$ Post2008 & & 0.0222 & 0.0017 \\
+ & & (0.0156) & (0.0263) \\
+NFA/GDP & 0.0004 & -0.0010 & -0.0011 \\
+ & (0.0004) & (0.0007) & (0.0007) \\
+Post2008 & & 0.0955* & 0.0832* \\
+ & & (0.0543) & (0.0494) \\
+Post2008 $\times$ Surprise & & -1.4477 & -1.0319 \\
+ & & (1.8043) & (2.3059) \\
+Post2008 $\times$ NFA/GDP & & 0.0010 & 0.0012* \\
+ & & (0.0007) & (0.0007) \\
+\hline
+Country FE & Yes & Yes & Yes \\
+Date Cluster & Yes & Yes & Yes \\
+Observations & 2103 & 2103 & 2103 \\
+$R^2$ & 0.0014 & 0.0070 & 0.0103 \\
+\hline\hline
+\end{tabular}
+\begin{tablenotes}
+\small
+\item \textit{Notes:} I define $e_{i,t}$ as foreign currency units per USD.
+The dependent variable is the spot return $r_{i,t} = -\Delta\log(e_{i,t})$,
+so $r > 0$ indicates foreign appreciation (USD depreciation).
+Post2008 $= 1$ for dates after September 15, 2008 (Lehman collapse).
+NFA/GDP is demeaned; all specifications include country fixed effects.
+Standard errors clustered by FOMC date (preferred: common shock structure).
+*** $p<0.01$, ** $p<0.05$, * $p<0.10$.
+\end{tablenotes}
+\end{table}
