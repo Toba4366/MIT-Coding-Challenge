@@ -39,6 +39,7 @@ SCRIPTS = [
     # TASK 2: Event-Study Regressions
     # ─────────────────────────────────────────────────────────────────────────
     ("task2_regressions.py", "Task 2: Event-Study Regressions — FX and yield responses"),
+    ("task2_placebo.py", "Task 2: Placebo Test — falsification with lead shock"),
     
     # ─────────────────────────────────────────────────────────────────────────
     # TASK 3: Panel Regression with NFA Interaction

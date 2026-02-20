@@ -1,0 +1,30 @@
+\begin{table}[htbp]
+\centering
+\caption{Exchange Rate Responses to Statement Surprises (STMT)}
+\label{tab:fx_response}
+\begin{tabular}{lccccc}
+\toprule
+Currency & $\beta$ & SE & t-stat & p-value & $R^2$ \\
+\midrule
+AUD & 0.0004 & 0.0172 & 0.03 & 0.979 & 0.000 \\
+CAD & $-0.0081$ & 0.0119 & $-0.68$ & 0.494 & 0.003 \\
+CHF & $-0.0153$ & 0.0107 & $-1.43$ & 0.155 & 0.010 \\
+EUR & $-0.0056$ & 0.0081 & $-0.69$ & 0.492 & 0.002 \\
+GBP & $-0.0025$ & 0.0080 & $-0.31$ & 0.758 & 0.000 \\
+JPY & $-0.0162$ & 0.0104 & $-1.55$ & 0.121 & 0.010 \\
+MXN & 0.0081 & 0.0177 & 0.45 & 0.650 & 0.001 \\
+NOK & $-0.0051$ & 0.0107 & $-0.48$ & 0.634 & 0.001 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize \textit{Notes}: Dependent variable is the spot return
+$r_{i,t} = -\Delta\log(e_{i,t})$, where $e_{i,t}$ is foreign currency per USD.
+Positive $r$ indicates foreign appreciation (USD depreciation).
+Signs are flipped from raw log-change to match Antol\'{i}n-D\'{i}az et al.\ (2023) convention.
+Hawkish surprises (STMT $>$ 0) $\rightarrow$ foreign depreciation ($r < 0$), so most $\beta < 0$.
+Heteroskedasticity-robust (HC1) standard errors. STMT is in basis points;
+$\beta$ represents the percentage FX response to a 1 bp statement surprise.
+Exchange rate responses are small and imprecisely estimated in daily data
+($R^2 < 1\%$ for all currencies). Sample: 269--270 FOMC events, 1994--2024.
+\end{flushleft}
+\end{table}

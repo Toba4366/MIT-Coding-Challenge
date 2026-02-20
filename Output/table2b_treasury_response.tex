@@ -1,0 +1,24 @@
+\begin{table}[htbp]
+\centering
+\caption{Treasury Yield Responses to Monetary Policy Surprises}
+\label{tab:treasury_response}
+\begin{tabular}{lcccc}
+\toprule
+& \multicolumn{2}{c}{STMT} & \multicolumn{2}{c}{MP1} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5}
+Maturity & $\beta$ & $R^2$ & $\beta$ & $R^2$ \\
+\midrule
+2-year & 1.058*** & 0.270 & 0.478*** & 0.163 \\
+5-year & 0.903*** & 0.157 & 0.412*** & 0.152 \\
+10-year & 0.507*** & 0.065 & 0.287*** & 0.112 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize \textit{Notes}: OLS regression of Treasury yield change (basis points)
+on monetary surprise (basis points) on FOMC announcement days only.
+Heteroskedasticity-robust (HC1) standard errors. STMT is the statement/PC surprise;
+MP1 is the target rate surprise. The declining response with maturity is consistent
+with monetary surprises primarily shifting near-horizon expected policy rates.
+Sample: 272 FOMC announcements, 1994--2024. *** $p<0.01$.
+\end{flushleft}
+\end{table}

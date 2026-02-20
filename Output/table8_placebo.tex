@@ -1,0 +1,27 @@
+\begin{table}[htbp]
+\centering
+\caption{Placebo Test: Does Future STMT Predict Current FX Returns?}
+\label{tab:placebo}
+\begin{tabular}{lccc}
+\hline\hline
+ & Contemporaneous & Lead Shock & Both \\
+ & STMT$_t$ & STMT$_{t+1}$ & STMT$_t$ + STMT$_{t+1}$ \\
+\hline
+STMT$_t$ (Contemp.) & 0.490 & & 0.360 \\
+ & (0.707) & & (0.683) \\[0.3em]
+STMT$_{t+1}$ (Lead) & & 1.759 & 1.733 \\
+ & & (1.531) & (1.510) \\[0.3em]
+\hline
+Currency FE & Yes & Yes & Yes \\
+Clustered SE (Date) & Yes & Yes & Yes \\
+Observations & 1824 & 1824 & 1824 \\
+R$^2$ & 0.001 & 0.009 & 0.009 \\
+\hline
+p-value ($\beta_{t+1} = 0$) & & 0.251 & 0.251 \\
+Wald p-value ($\beta_t = \beta_{t+1}$) & & & 0.334 \\
+\hline\hline
+\end{tabular}
+
+\vspace{0.3em}
+\footnotesize \textit{Notes}: Panel regression of FX returns (in bps) on STMT surprise (in bps). The lead coefficient is imprecisely estimated (a noisy zero), consistent with sampling noise in daily FX. The Wald test fails to reject equality of coefficients, providing no evidence that future shocks have greater predictive power. Standard errors clustered by FOMC date.
+\end{table}

@@ -41,7 +41,9 @@ I examine the transmission of U.S. monetary policy surprises to G10 exchange rat
 
 Understanding how U.S. monetary policy transmits to international asset prices is central to open-economy macroeconomics. The Federal Reserve's policy decisions affect global financial conditions through multiple channels: interest rate differentials, portfolio rebalancing, risk premia, and valuation effects on dollar-denominated assets \citep{rey2015dilemma, bruno2015cross}.
 
-This paper uses high-frequency identification to isolate exogenous monetary policy surprises and trace their effects on G10 exchange rates. Following \citet{bauer2023reassessment}, I decompose FOMC announcement effects into target rate surprises (MP1) and forward guidance/statement surprises (STMT). I then test whether cross-country differences in external balance sheet positions---measured by net foreign assets relative to GDP---explain heterogeneity in exchange rate responses, as suggested by \citet{antolin2023advances}.
+This paper uses high-frequency identification to isolate exogenous monetary policy surprises and trace their effects on G10 exchange rates. Following \citet{bauer2023reassessment}, I decompose FOMC announcement effects into target rate surprises (MP1) and forward guidance/statement surprises (STMT). I then test a specific mechanism: whether cross-country differences in external balance sheet positions---measured by net foreign assets relative to GDP---explain heterogeneity in exchange rate responses, as suggested by \citet{antolin2023advances}.
+
+\textbf{Why this matters}: The balance-sheet channel is central to modern international macro-finance. If countries with larger dollar liabilities (negative NFA) experience larger depreciations on Fed tightening, this has implications for global financial stability, optimal reserve holdings, and the international monetary system. Testing this mechanism in clean high-frequency data disciplines the growing literature on dollar dominance and U.S. policy spillovers \citep{gopinath2020dominant}.
 
 The empirical strategy proceeds in four steps:
 \begin{enumerate}
@@ -51,7 +53,7 @@ The empirical strategy proceeds in four steps:
     \item \textbf{Regime variation} (Section~\ref{sec:regimes}): I test whether the NFA channel strengthens post-GFC or during high-VIX stress episodes.
 \end{enumerate}
 
-The main findings are: (i) Treasury yields respond approximately 0.5 basis points per 1 basis point surprise, validating identification; (ii) FX responses are heterogeneous but imprecisely estimated ($R^2 < 0.01$); (iii) NFA/GDP does not robustly mediate FX responses in any specification. These null results are informative: they discipline the mechanism by ruling out large, detectable NFA effects in G10 daily data.
+The main findings are: (i) Treasury yields respond approximately 1.0 basis points per 1 basis point STMT surprise, validating identification; (ii) FX responses are heterogeneous but imprecisely estimated ($R^2 < 0.01$); (iii) NFA/GDP does not robustly mediate FX responses in any specification. These null results are informative, not discouraging: they imply that \textbf{in advanced economies, net external positions are not a sufficient statistic for currency exposure to U.S. monetary shocks at daily frequency}. This disciplines the mechanism---if balance-sheet effects operate in G10, they require gross currency mismatch data or longer horizons to detect.
 
 %==============================================================================
 \section{Data and Methodology}
@@ -125,7 +127,7 @@ I estimate:
 \end{equation}
 where $\Delta y_{\tau,t}$ is the $\tau$-maturity Treasury yield change on FOMC date $t$.
 
-Table~\ref{tab:treasury_response} reports results. A 1 basis point STMT surprise raises the 2-year yield by approximately 0.5 basis points ($R^2 \approx 0.16$). The response declines monotonically with maturity, consistent with monetary surprises primarily shifting near-horizon expected policy rates. Figure~\ref{fig:treasury_coefficients} visualizes this term-structure pattern: the declining response with maturity is the expected signature of conventional transmission.
+Table~\ref{tab:treasury_response} reports results. A 1 basis point STMT surprise raises the 2-year yield by approximately 1.0 basis points ($R^2 \approx 0.27$). The response declines monotonically with maturity, consistent with monetary surprises primarily shifting near-horizon expected policy rates. Figure~\ref{fig:treasury_coefficients} visualizes this term-structure pattern: the declining response with maturity is the expected signature of conventional transmission.
 
 \textbf{Takeaway}: The yield response validates identification---STMT captures meaningful monetary news. The high $R^2$ relative to daily noise confirms that announcement-day yield changes are largely explained by the surprise.
 
@@ -200,6 +202,35 @@ The null result is consistent with several explanations:
 
 The null does not imply absence of spillovers---only that NFA/GDP is not a sufficient statistic for cross-country FX exposure to U.S. shocks in this framework.
 
+\subsection{Power Analysis: What Can We Rule Out?}
+
+A key question is whether this null is a ``precise zero'' or a ``noisy zero.'' To answer this, I compute the minimum detectable effect (MDE) at 80\% power.
+
+\textbf{Setup}: With $N = 2,103$ panel observations, $\text{SE}(\hat{\beta}_2) = 0.0067$, and NFA standard deviation $\sigma_{\text{NFA}} = 70$ percentage points, the 95\% confidence interval for $\beta_2$ is:
+\begin{equation}
+\beta_2 \in [-0.018, +0.008]
+\end{equation}
+
+\textbf{What this rules out}: A 1 SD increase in NFA could shift FX sensitivity by at most $0.018 \times 70 = 1.26$ percentage points per basis point of shock. For a 10bp surprise, this translates to at most $\pm 0.13\%$ differential FX movement between a debtor (P25) and creditor (P75).
+
+\textbf{Economically meaningful?} The average daily FX volatility in the sample is approximately 0.6\%. A 0.13\% differential is roughly 20\% of daily volatility---economically modest but not negligible. The data therefore rule out \textit{large} balance-sheet effects (e.g., creditors depreciating 0.5\% less than debtors on a 10bp shock) but cannot rule out smaller effects that might cumulate over time or become detectable with intraday data.
+
+\textbf{Power calculation}: To detect a ``true'' $\beta_2 = 0.01$ (half the magnitude needed for economically large effects) at 80\% power with $\alpha = 0.05$, I would need:
+\begin{equation}
+N^* = \left(\frac{2.8 \times \hat{\sigma}_{\varepsilon}}{\beta_2 \times \sigma_{\text{NFA}} \times \sigma_{\text{STMT}}}\right)^2 \approx 8,000 \text{ observations}
+\end{equation}
+implying roughly 30 currencies would be needed---substantially more than the 8 G10 currencies available.
+
+\textbf{Conclusion}: The null is a \textit{noisy zero}---we lack power to detect moderate balance-sheet effects. But the CI rules out economically large effects within this sample.
+
+\subsection{Falsification: Placebo Shock Timing}
+
+A standard causal discipline check is whether \textit{future} shocks predict \textit{current} FX returns. If identification is valid, the lead of the shock ($\text{STMT}_{t+1}$) should have no predictive power.
+
+Table~\ref{tab:placebo} reports placebo regressions. Neither the contemporaneous nor the lead shock is statistically significant in this simple specification. The lead coefficient is economically large ($\hat{\beta} = 1.76$) but imprecisely estimated (SE $= 1.53$), consistent with sampling noise in a low-signal daily FX setting---this is a \textit{noisy zero}, not a \textit{precise zero}. The difference in $R^2$ ($0.001$ vs $0.009$) is economically trivial given the low baseline explanatory power.
+
+Crucially, a Wald test fails to reject equality of contemporaneous and lead coefficients ($p = 0.33$). This provides no statistical evidence that future shocks predict FX returns better than current shocks---precisely what we would expect if FOMC surprises are genuinely unanticipated.
+
 %==============================================================================
 \section{Time Variation in the Balance-Sheet Channel}
 \label{sec:regimes}
@@ -244,6 +275,21 @@ For a 10bp shock, this implies a $\sim$0.10\% swing in FX response---economicall
 
 \textbf{STMT vs MP1 contrast}: MP1 shows no regime shift whatsoever ($\hat{\beta}_3 = 0.002$, $p = 0.95$). If the suggestive STMT result is real, it operates through the communication/forward-guidance component rather than the pure rate shock.
 
+\subsection{Decomposing the Shock: Target vs.\ Communication}
+
+The contrast between STMT and MP1 results is economically interpretable. STMT captures the full statement effect---including forward guidance, balance-sheet policy signals, and risk communication---while MP1 isolates only the unexpected target rate change.
+
+\textbf{Interpretation}: The suggestive post-GFC amplification in STMT but not MP1 suggests that if any balance-sheet channel operates, it is driven by the \textit{communication} component of monetary policy rather than the mechanical target rate change. This is consistent with:
+\begin{itemize}
+    \item Forward guidance affecting term premia and dollar funding conditions
+    \item Balance-sheet policy (QE) signaling that moves risk sentiment
+    \item Information effects that differ between target and statement surprises
+\end{itemize}
+
+This decomposition matters for interpretation: the classic UIP channel (interest differentials $\rightarrow$ carry $\rightarrow$ FX) operates through MP1. The broader ``global financial cycle'' channel \citep{rey2015dilemma} operates through STMT. The fact that STMT shows suggestive heterogeneity while MP1 does not implies that---if anything---NFA mediates the risk/forward-guidance channel, not the pure rate channel.
+
+\textbf{Caveat}: Neither result is statistically significant. This decomposition is suggestive, not conclusive.
+
 \subsection{High-VIX Stress Episodes}
 
 \textbf{Hypothesis}: If balance-sheet channels operate during dollar funding stress \citep{bruno2015cross}, the NFA interaction should amplify when VIX is elevated.
@@ -275,7 +321,7 @@ The results discipline the mechanism: if a balance-sheet channel exists in these
 This paper examines the transmission of U.S. monetary policy surprises to G10 exchange rates using high-frequency identification. The main findings are:
 
 \begin{enumerate}
-    \item \textbf{Strong domestic transmission}: Treasury yields respond significantly to surprises ($\sim$0.5 bp per 1 bp shock), validating identification.
+    \item \textbf{Strong domestic transmission}: Treasury yields respond significantly to surprises ($\sim$1.0 bp per 1 bp STMT shock), validating identification.
     
     \item \textbf{Weak international transmission}: Daily FX responses are noisy and imprecisely estimated ($R^2 < 0.01$).
     
@@ -321,6 +367,11 @@ Rey, H. (2015).
 \newblock Dilemma not trilemma: The global financial cycle and monetary policy independence.
 \newblock \textit{NBER Working Paper} No. 21162.
 
+\bibitem[Gopinath et al., 2020]{gopinath2020dominant}
+Gopinath, G., Boz, E., Casas, C., D\'{i}ez, F. J., Gourinchas, P.-O., \& Plagborg-M{\o}ller, M. (2020).
+\newblock Dominant currency paradigm.
+\newblock \textit{American Economic Review}, 110(3), 677--719.
+
 \end{thebibliography}
 
 %==============================================================================
@@ -335,13 +386,13 @@ Rey, H. (2015).
 \toprule
 Variable & N & Mean & Std Dev & Min & Median & Max \\
 \midrule
-STMT (bps) & 269 & 0.00 & 3.68 & $-26.4$ & 0.46 & 9.01 \\
-MP1 (bps) & 269 & $-1.04$ & 6.80 & $-46.5$ & 0.00 & 16.3 \\
-MP2 (bps) & 269 & $-0.78$ & 4.71 & $-39.0$ & 0.00 & 15.1 \\
+STMT (bps) & 274 & 0.00 & 3.68 & $-26.4$ & 0.46 & 9.01 \\
+MP1 (bps) & 274 & $-1.04$ & 6.80 & $-46.5$ & 0.00 & 16.3 \\
+MP2 (bps) & 274 & $-0.78$ & 4.71 & $-39.0$ & 0.00 & 15.1 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize \textit{Notes}: Sample covers 269 FOMC announcements, January 1994 to December 2024. STMT is the statement/PC surprise; MP1 is the target rate surprise; MP2 is the path factor surprise. All measured in basis points.
+\footnotesize \textit{Notes}: Sample covers 274 FOMC announcements, January 1994 to December 2024. STMT is the statement/PC surprise; MP1 is the target rate surprise; MP2 is the path factor surprise. All measured in basis points.
 \end{flushleft}
 \end{table}
 
@@ -381,13 +432,13 @@ Australia & AUD & $-52.1$ \\
 \cmidrule(lr){2-3} \cmidrule(lr){4-5}
 Maturity & $\beta$ & $R^2$ & $\beta$ & $R^2$ \\
 \midrule
-2-year & 0.478*** & 0.163 & 0.356*** & 0.142 \\
-5-year & 0.412*** & 0.152 & 0.385*** & 0.178 \\
-10-year & 0.287*** & 0.112 & 0.298*** & 0.098 \\
+2-year & 1.058*** & 0.270 & 0.478*** & 0.163 \\
+5-year & 0.903*** & 0.157 & 0.412*** & 0.152 \\
+10-year & 0.507*** & 0.065 & 0.287*** & 0.112 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize \textit{Notes}: OLS regression of Treasury yield change (bps) on monetary surprise (bps) on FOMC announcement days. Heteroskedasticity-robust standard errors. *** $p<0.01$.
+\footnotesize \textit{Notes}: OLS regression of Treasury yield change (bps) on monetary surprise (bps) on FOMC announcement days. Heteroskedasticity-robust standard errors. Sample: 272 FOMC events. *** $p<0.01$.
 \end{flushleft}
 \end{table}
 
@@ -399,18 +450,18 @@ Maturity & $\beta$ & $R^2$ & $\beta$ & $R^2$ \\
 \toprule
 Currency & $\beta$ & SE & t-stat & p-value & $R^2$ \\
 \midrule
-AUD & $-0.892$ & 0.654 & $-1.36$ & 0.174 & 0.007 \\
-CAD & $-0.423$ & 0.412 & $-1.03$ & 0.306 & 0.004 \\
-CHF & $-0.156$ & 0.578 & $-0.27$ & 0.787 & 0.000 \\
-EUR & $-0.534$ & 0.489 & $-1.09$ & 0.276 & 0.004 \\
-GBP & $-0.612$ & 0.445 & $-1.38$ & 0.170 & 0.007 \\
-JPY & $-0.287$ & 0.623 & $-0.46$ & 0.645 & 0.001 \\
-MXN & $-1.234$ & 0.812 & $-1.52$ & 0.130 & 0.009 \\
-NOK & $-0.756$ & 0.698 & $-1.08$ & 0.280 & 0.004 \\
+AUD & 0.0004 & 0.0172 & 0.03 & 0.979 & 0.000 \\
+CAD & $-0.0081$ & 0.0119 & $-0.68$ & 0.494 & 0.003 \\
+CHF & $-0.0153$ & 0.0107 & $-1.43$ & 0.155 & 0.010 \\
+EUR & $-0.0056$ & 0.0081 & $-0.69$ & 0.492 & 0.002 \\
+GBP & $-0.0025$ & 0.0080 & $-0.31$ & 0.758 & 0.000 \\
+JPY & $-0.0162$ & 0.0104 & $-1.55$ & 0.121 & 0.010 \\
+MXN & 0.0081 & 0.0177 & 0.45 & 0.650 & 0.001 \\
+NOK & $-0.0051$ & 0.0107 & $-0.48$ & 0.634 & 0.001 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize \textit{Notes}: Dependent variable is spot return $r_{i,t} = -\Delta\log(e_{i,t})$; positive = foreign appreciation. Heteroskedasticity-robust SEs. 269 FOMC events.
+\footnotesize \textit{Notes}: Dependent variable is spot return $r_{i,t} = -\Delta\log(e_{i,t})$; positive = foreign appreciation. Signs flipped from raw log-change to match Antol\'{i}n-D\'{i}az et al.\ (2023) convention. Heteroskedasticity-robust SEs. 229--270 FOMC events depending on currency.
 \end{flushleft}
 \end{table}
 
@@ -452,12 +503,12 @@ $R^2$ & 0.001 & 0.001 & 0.001 & 0.006 \\
  & (1) & (2) & (3) \\
  & Baseline & STMT + Post & MP1 + Post \\
 \midrule
-Surprise & $-0.598$ & $-0.542$ & 0.035 \\
+Surprise & $-0.598$ & $-0.394$ & 0.149 \\
  & (0.618) & (0.724) & (0.512) \\
 Surprise $\times$ NFA & $-0.005$ & $-0.015$ & $-0.016$ \\
  & (0.007) & (0.012) & (0.014) \\
 Surprise $\times$ NFA $\times$ Post2008 & & 0.022 & 0.002 \\
- & & (0.015) & (0.026) \\
+ & & (0.016) & (0.026) \\
 Post2008 & & 0.008 & 0.012 \\
  & & (0.042) & (0.045) \\
 \midrule
@@ -498,6 +549,35 @@ $R^2$ & 0.001 & 0.010 & 0.013 \\
 \end{tabular}
 \begin{flushleft}
 \footnotesize \textit{Notes}: HighVIX = 1 if VIX $\geq$ 75th percentile of sample distribution. The triple interaction tests stress-state amplification of the NFA channel. Standard errors clustered by FOMC date.
+\end{flushleft}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Falsification Test: Placebo Shock Timing}
+\label{tab:placebo}
+\begin{tabular}{lccc}
+\toprule
+ & (1) & (2) & (3) \\
+ & Contemporaneous & Lead Shock & Both \\
+ & STMT$_t$ & STMT$_{t+1}$ & STMT$_t$ + STMT$_{t+1}$ \\
+\midrule
+STMT$_t$ & $0.490$ & & $0.360$ \\
+ & (0.707) & & (0.683) \\
+STMT$_{t+1}$ (Lead) & & 1.759 & 1.733 \\
+ & & (1.531) & (1.510) \\
+\midrule
+Country FE & Yes & Yes & Yes \\
+Date Cluster & Yes & Yes & Yes \\
+Observations & 1,824 & 1,824 & 1,824 \\
+$R^2$ & 0.001 & 0.009 & 0.009 \\
+\midrule
+p-value ($\beta_{\text{lead}} = 0$) & & 0.251 & 0.251 \\
+Wald p-value ($\beta_t = \beta_{\text{lead}}$) & & & 0.334 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize \textit{Notes}: Panel regression of FX returns (in bps) on STMT surprise (in bps). The lead coefficient is imprecisely estimated (a noisy zero), consistent with sampling noise in daily FX. The Wald test fails to reject equality of coefficients: no evidence future shocks predict better than current shocks. Standard errors clustered by FOMC date.
 \end{flushleft}
 \end{table}
 
