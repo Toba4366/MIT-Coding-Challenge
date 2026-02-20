@@ -102,12 +102,12 @@ Several factors may explain the null result:
 
 \subsection*{Hypothesis}
 
-If the NFA channel operates through dollar funding stress, it should strengthen after the 2008 global financial crisis, when dollar liquidity became central to global finance. I test this by adding a triple interaction:
+If the NFA channel operates through dollar funding stress, it should strengthen after 2008, when dollar liquidity became central to global finance. I test this by adding a triple interaction:
 \begin{align}
-\Delta e_{i,t} &= \alpha_i + \beta_1 \cdot \text{Surprise}_t + \beta_2 \cdot (\text{Surprise}_t \times \text{NFA}) \nonumber \\
-&\quad + \beta_3 \cdot (\text{Surprise}_t \times \text{NFA} \times \text{Post2008}) + \text{controls} + \varepsilon_{i,t}
+\Delta e_{i,t} &= \alpha_i + \beta_1 \cdot S_t + \beta_2 \cdot (S_t \times \text{NFA}) \nonumber \\
+&\quad + \beta_3 \cdot (S_t \times \text{NFA} \times \text{Post08}) + \text{controls} + \varepsilon_{i,t}
 \end{align}
-where Post2008 = 1 for dates after September 15, 2008.\footnote{The Lehman Brothers bankruptcy on this date is a standard structural break in the global finance literature; see \citet{bruno2015cross}.}
+where $S_t$ denotes the surprise and Post08 = 1 for dates after September 15, 2008.\footnote{Lehman bankruptcy; see \citet{bruno2015cross}.}
 
 \subsection*{Results}
 
