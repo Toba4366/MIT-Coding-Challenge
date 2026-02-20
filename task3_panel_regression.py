@@ -660,7 +660,7 @@ for curr in nfa_avg.index:
                     xytext=(0, 10), textcoords='offset points')
 
 ax.set_xlabel('Net Foreign Assets (% of GDP)', fontsize=12, fontweight='bold')
-ax.set_ylabel('Marginal Effect of STMT on Spot Return (%)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Spot Return $r_{i,t}$ = $-\Delta\log(e)$ (%)', fontsize=12, fontweight='bold')
 ax.set_title('Figure 11: How Currency Response to U.S. Monetary Policy\n'
              'Varies with Net Foreign Asset Position',
              fontsize=14, fontweight='bold', pad=15)
@@ -830,10 +830,11 @@ latex += r"""\hline\hline
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} The dependent variable is the spot return $r_{i,t} = -\Delta\log(e_{i,t})$,
-where $e$ is the foreign-per-USD exchange rate. Positive $r$ denotes foreign currency
-appreciation. This convention matches Antol\'{i}n-D\'{i}az et al.\ (2023), so that
-$\beta_2 > 0$ means creditor countries depreciate less. STMT is the statement surprise;
+\item \textit{Notes:} I define $e_{i,t}$ as foreign currency units per USD
+(e.g., JPY/USD). The dependent variable is the spot return
+$r_{i,t} = -\Delta\log(e_{i,t})$, so $r > 0$ indicates foreign appreciation
+(USD depreciation). This convention matches Antol\'{i}n-D\'{i}az et al.\ (2023),
+so that $\beta_2 > 0$ means creditor countries depreciate less. STMT is the statement surprise;
 MP1 is the target rate surprise, both in basis points. NFA/GDP is from Lane \&
 Milesi-Ferretti (EWN, 2024 update), lagged one year and demeaned so $\beta_1$
 represents the effect at average NFA.
@@ -948,15 +949,15 @@ INTERPRETATION & DISCUSSION
 ══════════════════════════════════════════════════════════════════════════════════
 
   EXCHANGE RATE CONVENTION:
-    Dependent variable: spot return r_{{i,t}} = -Δlog(e_{{i,t}})
-    where e = foreign per USD. Positive r = foreign appreciation.
-    This matches Antolín-Díaz et al. (2023).
-    β₁ < 0 expected: hawkish surprise → foreign depreciation.
-    β₂ > 0 predicted: creditors depreciate LESS (Antolín-Díaz).
+    I define e_{{i,t}} as foreign currency units per USD (e.g., JPY/USD).
+    The dependent variable is the spot return r_{{i,t}} = -Δlog(e_{{i,t}}),
+    so r > 0 indicates foreign appreciation (USD depreciation).
+    This matches the convention in Antolín-Díaz et al. (2023).
 
-  The interaction coefficient β₂ = {b2:.6f} is {'positive, directionally' if b2 > 0 else 'negative,'}
-  {'consistent with' if b2 > 0 else 'opposite to'} the balance-sheet hypothesis of Antolín-Díaz
-  et al. (2023), but {sig_label} under date-clustered inference
+  The balance-sheet hypothesis predicts β₂ > 0: net creditor currencies
+  should depreciate less (their r falls by less) after a U.S. tightening
+  shock. In my sample, β̂₂ = {b2:.6f}, {'directionally consistent' if b2 > 0 else 'implying the opposite pattern'},
+  though the estimate is imprecise under date-clustered inference
   (p = {pval_main:.3f}).
 
   A 10bp hawkish surprise predicts a {abs(resp_debtor):.4f}% {'depreciation' if resp_debtor < 0 else 'appreciation'}
