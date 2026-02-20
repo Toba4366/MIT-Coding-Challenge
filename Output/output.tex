@@ -1,0 +1,258 @@
+\documentclass[11pt]{article}
+
+% ============================================================================
+% PACKAGES
+% ============================================================================
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% ============================================================================
+% TITLE
+% ============================================================================
+\title{\textbf{MIT Coding Challenge: Monetary Policy Shocks and Exchange Rates}\\[0.5em]
+\large Complete Output Compilation}
+\author{Trenton Eugene O'Bannon}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\clearpage
+
+% ============================================================================
+% PART I: TABLES
+% ============================================================================
+\part{Tables}
+
+% ----------------------------------------------------------------------------
+\section{Table 1: Summary Statistics}
+\input{table1_summary_stats.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 2: Regression Results}
+\input{table2_regression_results.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 2a: NFA by Country}
+\input{table2a_nfa_by_country.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 2b: Treasury Response}
+\input{table2b_treasury_response.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 2c: FX Response}
+\input{table2c_fx_response.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 3: NFA Panel Regression}
+\input{table3_nfa_panel.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 4: Time Variation (Post-GFC)}
+\input{table4_time_variation.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 5: VIX Stress Interaction}
+\input{table5_vix_stress.tex}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Table 8: Placebo Test}
+\input{table8_placebo.tex}
+
+\clearpage
+
+% ============================================================================
+% PART II: FIGURES
+% ============================================================================
+\part{Figures}
+
+% ----------------------------------------------------------------------------
+\section{Figure 1: Surprise Time Series}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure1_surprise_timeseries.png}
+\caption{Monetary policy surprise time series (STMT, MP1, MP2), 1994--2024.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 2: Correlation Heatmap}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure2_correlation_heatmap.png}
+\caption{Correlation heatmap of monetary policy surprises and asset price changes.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 3: Surprise Distributions}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure3_surprise_distributions.png}
+\caption{Distribution of monetary policy surprise measures.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 4: STMT Validation}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure4_stmt_validation.png}
+\caption{STMT validation: 2-year Treasury response to monetary policy surprises.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 5: Event Scatter}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure5_event_scatter.png}
+\caption{Scatter plot of FX changes vs.\ monetary policy surprises on FOMC dates.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 6: Volatility by Period}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure6_volatility_by_period.png}
+\caption{FX volatility by sub-period (pre-GFC, GFC, post-GFC).}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 7: Term Structure Response}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure7_term_structure.png}
+\caption{Treasury yield response across the term structure.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 8: FX Heterogeneity}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure8_fx_heterogeneity.png}
+\caption{Cross-currency heterogeneity in FX response to monetary policy surprises.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 9: Coefficient Plot}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure9_coefficient_plot.png}
+\caption{Regression coefficient estimates with 95\% confidence intervals.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 10: Betas vs NFA}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure10_betas_vs_nfa.png}
+\caption{Country-specific FX betas vs.\ NFA/GDP position.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 10b: Betas vs NFA (Both Measures)}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure10b_betas_vs_nfa_both.png}
+\caption{Country-specific FX betas vs.\ NFA/GDP: STMT and MP1 comparison.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 11: Marginal Effects}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure11_marginal_effects.png}
+\caption{Marginal effects of monetary policy surprise conditional on NFA/GDP.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 12: Predicted Responses}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure12_predicted_responses.png}
+\caption{Model-predicted FX responses by NFA quintile.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 13: Time Variation}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure13_time_variation.png}
+\caption{Time variation in NFA channel: pre-GFC vs.\ post-GFC comparison.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 14: Coefficient Comparison}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure14_coefficient_comparison.png}
+\caption{Coefficient comparison across model specifications.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 15: VIX Stress}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure15_vix_stress.png}
+\caption{NFA channel during high-VIX stress episodes.}
+\end{figure}
+
+\clearpage
+% ----------------------------------------------------------------------------
+\section{Figure 16: VIX Coefficient Comparison}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figure16_vix_coefficient_comparison.png}
+\caption{Coefficient comparison: normal vs.\ high-VIX regimes.}
+\end{figure}
+
+\clearpage
+
+% ============================================================================
+% PART III: WRITEUPS
+% ============================================================================
+\part{Writeups}
+
+The complete analysis writeup is provided as a separate document:
+
+\begin{itemize}
+    \item \textbf{writeup.pdf} --- Main submission ($\sim$5 pages text + tables/figures)
+\end{itemize}
+
+This document contains the full methodology, results, and interpretation of the analysis.
+
+\vspace{1em}
+\noindent\textbf{Code Repository:} All source code is available at:\\
+\url{https://github.com/Toba4366/MIT-Coding-Challenge}
+
+\end{document}
