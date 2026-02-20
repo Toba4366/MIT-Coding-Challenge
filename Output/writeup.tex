@@ -22,7 +22,7 @@
 \noindent\textbf{Replication:} Code and data at \url{https://github.com/Toba4366/MIT-Coding-Challenge}
 
 %==============================================================================
-\section{Part 1: Data Preparation and Surprise Measure Selection}
+\section*{Task 1: Data Preparation and Surprise Measure Selection}
 %==============================================================================
 
 \subsection*{(a) Exploration of Surprise Measures}
@@ -35,14 +35,14 @@ I use STMT as my baseline surprise measure for three reasons: (1) it summarizes 
 
 \subsection*{(c) Data Merge}
 
-The sample covers 274 FOMC announcements from January 1994 to December 2024. I merge surprises with: (i) daily spot exchange rates for 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK); (ii) Treasury par yields (2Y, 5Y, 10Y) from Treasury.gov; (iii) breakeven inflation rates (5Y, 10Y) from FRED TIPS spread series. Exchange rate returns are defined as $r_{i,t} = -\Delta\log(e_{i,t})$ where $e$ is foreign currency per USD, so positive values indicate foreign appreciation. NFA/GDP data come from Lane and Milesi-Ferretti (2018), matched using lagged annual values to avoid reverse causality.
+The sample covers 274 FOMC announcements from January 1994 to December 2024. I merge surprises with: (i) daily spot exchange rates for 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK); (ii) Treasury par yields (2Y, 5Y, 10Y) from the U.S. Department of the Treasury; (iii) breakeven inflation rates (5Y, 10Y) from FRED. Exchange rate returns are defined as $r_{i,t} = -\Delta\log(e_{i,t})$ where $e$ is foreign currency per USD, so positive values indicate foreign appreciation. NFA/GDP data come from \citet{lane2018external}, matched using lagged annual values to avoid reverse causality.
 
 \subsection*{(d) Summary Statistics}
 
 Table~\ref{tab:summary} presents summary statistics. Both surprise measures have means near zero (consistent with market efficiency) with fat tails reflecting crisis-period announcements. STMT has standard deviation 3.7 bps, with range $[-16.9, +12.7]$ bps. Cross-country NFA/GDP varies substantially: Switzerland (+142\% GDP) and Norway (+68\%) are large creditors; Australia ($-52\%$) and Mexico ($-39\%$) are debtors.
 
 %==============================================================================
-\section{Part 2: Asset Price Responses to Monetary Policy}
+\section*{Task 2: Asset Price Responses to Monetary Policy}
 %==============================================================================
 
 I estimate currency- and asset-specific regressions:
@@ -66,7 +66,7 @@ Table~\ref{tab:fx} reports exchange rate responses. Coefficients are heterogeneo
 \textbf{Interpretation}: The contrast between strong yield responses and noisy FX responses suggests limited power in a daily event-study design for detecting cross-country heterogeneity. This motivates the panel approach in Part 3, which pools information across currencies.
 
 %==============================================================================
-\section{Part 3: The Role of External Positions}
+\section*{Task 3: The Role of External Positions}
 %==============================================================================
 
 I estimate a panel regression testing whether NFA/GDP moderates exchange rate responses:
@@ -97,7 +97,7 @@ Several factors may explain the null result:
 \end{itemize}
 
 %==============================================================================
-\section{Part 4: Extension --- Time Variation in the Balance-Sheet Channel}
+\section*{Task 4: Extension --- Time Variation in the Balance-Sheet Channel}
 %==============================================================================
 
 \subsection*{Hypothesis}
@@ -107,11 +107,11 @@ If the NFA channel operates through dollar funding stress, it should strengthen 
 \Delta e_{i,t} &= \alpha_i + \beta_1 \cdot \text{Surprise}_t + \beta_2 \cdot (\text{Surprise}_t \times \text{NFA}) \nonumber \\
 &\quad + \beta_3 \cdot (\text{Surprise}_t \times \text{NFA} \times \text{Post2008}) + \text{controls} + \varepsilon_{i,t}
 \end{align}
-where Post2008 = 1 for dates after September 15, 2008 (Lehman collapse).
+where Post2008 = 1 for dates after September 15, 2008.\footnote{The Lehman Brothers bankruptcy on this date is a standard structural break in the global finance literature; see \citet{bruno2015cross}.}
 
 \subsection*{Results}
 
-Table~\ref{tab:extension} presents the results. The triple interaction $\hat{\beta}_3 = 0.022$ (SE $= 0.015$, $p = 0.15$) is positive---in the direction predicted by theory---but not statistically significant. For STMT, the NFA slope shifts from $-0.015$ (pre-GFC) to $+0.007$ (post-GFC). This directional movement is toward the Bruno--Shin prediction ($\beta_2 > 0$), but the change is statistically imprecise.
+Table~\ref{tab:extension} presents the results. The triple interaction $\hat{\beta}_3 = 0.022$ (SE $= 0.015$, $p = 0.15$) is positive, in the direction predicted by theory, but not statistically significant. For STMT, the NFA slope shifts from $-0.015$ (pre-GFC) to $+0.007$ (post-GFC). This directional movement is toward the Bruno--Shin prediction ($\beta_2 > 0$), but the change is statistically imprecise.
 
 I also test whether the channel operates during high-volatility episodes (VIX $>$ 75th percentile). The stress interaction is similarly insignificant ($p = 0.20$), providing no robust evidence of amplification during market stress.
 
@@ -120,12 +120,14 @@ I also test whether the channel operates during high-volatility episodes (VIX $>
 Given the null results, I assess what effect sizes the data can rule out. The standard error on $\beta_2$ implies a minimum detectable effect (at 80\% power) of approximately $|0.007| \times 2.8 \approx 0.02$. With NFA SD $\approx 70$ percentage points, this corresponds to differential FX responses of $\sim$1.4 percentage points per 10 bp shock across extreme debtors and creditors---about 20\% of daily FX volatility. Thus, the null result bounds the channel's magnitude at practically relevant levels.
 
 %==============================================================================
-\section{Conclusion}
+\section*{Conclusion}
 %==============================================================================
 
 U.S. Treasury yields respond strongly to monetary policy surprises, validating the high-frequency identification strategy. Exchange rate responses are noisy and heterogeneous at daily frequency, with $R^2 < 1\%$. Net foreign asset positions do not robustly mediate FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. These null results do not reject the theoretical relevance of balance-sheet channels; rather, they indicate that within a daily-frequency event-study design using 8 advanced-economy currencies, NFA/GDP is not a sufficient statistic for currency exposure to U.S. monetary shocks. Extensions using gross position measures or larger cross-sections of emerging-market currencies may yield sharper identification.
 
-\vspace{1em}
+\vspace{2em}
+\noindent\rule{\textwidth}{0.4pt}
+\vspace{0.5em}
 \noindent\footnotesize A longer version with additional robustness checks and extended discussion is available in the GitHub repository.
 
 %==============================================================================
