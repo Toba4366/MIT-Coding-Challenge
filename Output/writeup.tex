@@ -117,7 +117,7 @@ I also test whether the channel operates during high-volatility episodes (VIX $>
 
 \subsection*{Power Analysis}
 
-Given the null results, I assess what effect sizes the data can rule out. The standard error on $\beta_2$ implies a minimum detectable effect (at 80\% power) of approximately $|0.007| \times 2.8 \approx 0.02$. With NFA SD $\approx 70$ percentage points, this corresponds to differential FX responses of $\sim$1.4 percentage points per 10 bp shock across extreme debtors and creditors---about 20\% of daily FX volatility. Thus, the null result bounds the channel's magnitude at practically relevant levels.
+Given the null results, I assess what effect sizes the data can rule out (Table~\ref{tab:power}). The standard error on $\beta_2$ implies a minimum detectable effect (at 80\% power) of approximately $|0.007| \times 2.8 \approx 0.02$. With NFA SD $\approx 70$ percentage points, this corresponds to differential FX responses of $\sim$1.4 percentage points per 10 bp shock across extreme debtors and creditors---about 20\% of daily FX volatility. Thus, the null result bounds the channel's magnitude at practically relevant levels.
 
 %==============================================================================
 \section*{Conclusion}
@@ -277,6 +277,31 @@ $H_0: \beta_3 = 0$ & & $p = 0.154$ \\
 \end{tabular}
 \begin{flushleft}
 \footnotesize \textit{Notes}: Post2008 = 1 for dates after September 15, 2008. Standard errors clustered by FOMC date.
+\end{flushleft}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Power Analysis: Minimum Detectable Effects}
+\label{tab:power}
+\begin{tabular}{lc}
+\toprule
+Metric & Value \\
+\midrule
+SE($\beta_2$) & 0.007 \\
+MDE (80\% power, $t_{0.05/2} \times \text{SE} \times 2.8$) & 0.020 \\
+NFA/GDP standard deviation & 70 pp \\
+Implied differential FX response & 1.4 pp per 10 bp \\
+Mean daily FX volatility & $\sim$0.6\% \\
+MDE as share of daily volatility & $\sim$20\% \\
+\midrule
+\multicolumn{2}{l}{\textit{Implied sample requirements for $\beta_2 = 0.01$:}} \\
+Required observations ($N$) & $\sim$8,000 \\
+Equivalent expansion & $\sim$30 currencies \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize \textit{Notes}: MDE = minimum detectable effect at 80\% power with $\alpha = 0.05$ (two-sided). Differential FX response = MDE $\times$ NFA SD. Sample expansion assumes constant SE scaling with $\sqrt{N}$.
 \end{flushleft}
 \end{table}
 
