@@ -5,7 +5,11 @@ Panel regression testing whether Net Foreign Asset (NFA) positions
 moderate currency responses to U.S. monetary policy surprises.
 
 Specification:
-    Δe_{i,t} = α_i + β1·STMT_t + β2·(STMT_t × NFA_{i,t-1}) + γ·NFA_{i,t-1} + ε_{i,t}
+    r_{i,t} = α_i + β1·STMT_t + β2·(STMT_t × NFA_{i,t-1}) + γ·NFA_{i,t-1} + ε_{i,t}
+
+    where r_{i,t} = -Δlog(e_{i,t}), the "spot return" on currency i.
+    Positive r = foreign currency appreciation. This matches the convention
+    in Antolín-Díaz et al. (2023) so that β2 > 0 means creditors depreciate less.
 
 Identification:
     Cross-country differences in predetermined balance sheet positions
@@ -200,6 +204,11 @@ panel_long = pd.melt(
 
 # Clean currency names: d_CAD → CAD
 panel_long['currency'] = panel_long['currency'].str.replace('d_', '', regex=False)
+
+# CONVENTION FIX: Flip sign so positive = foreign currency appreciation ("spot return")
+# Raw d_e = Δlog(foreign/USD), so positive = USD appreciation = foreign depreciation
+# We want: positive = foreign appreciation, matching Antolín-Díaz et al. (2023)
+panel_long['d_e'] = -panel_long['d_e']
 
 # Drop missing
 panel_long = panel_long.dropna(subset=['d_e', 'STMT'])
@@ -440,11 +449,15 @@ nfa_avg = panel_long.groupby('currency')['NFA_GDP'].mean()
 shock = 0.10  # 10 bps in decimal (the natural macro unit)
 
 print(f"\nKEY COEFFICIENT: β2 (STMT × NFA/GDP) = {b2:.6f}")
-print(f"  FX convention: e = foreign per USD; Δe > 0 = USD appreciation (foreign depreciation)")
-print(f"  β₂ > 0 means higher NFA → LARGER Δe → MORE foreign depreciation")
-print(f"  Balance-sheet hypothesis (Antolín-Díaz et al. 2023): β₂ < 0 (creditors depreciate LESS)")
-print(f"  Actual sign: {'Positive (opposite to balance-sheet prediction)' if b2 > 0 else 'Negative (consistent with balance-sheet prediction)'}")
-print(f"  p-value (date-clustered): {result_date.pvalues['STMT_x_NFA']:.4f}")
+print(f"  FX convention: spot return (positive = foreign appreciation)")
+print(f"  Hawkish surprise → foreign depreciation → β₁ < 0 expected")
+print(f"  Balance-sheet hypothesis (Antolín-Díaz et al. 2023): β₂ > 0")
+print(f"    (creditors depreciate LESS, i.e. less negative response)")
+print(f"  Actual sign: {'Positive ✓ (consistent with balance-sheet prediction)' if b2 > 0 else 'Negative ✗ (opposite to balance-sheet prediction)'}")
+pval_interact = result_date.pvalues['STMT_x_NFA']
+sig_str = 'Yes' if pval_interact < 0.05 else f'No (p = {pval_interact:.3f})'
+print(f"  Statistical significance: {sig_str}")
+print(f"  p-value (date-clustered): {pval_interact:.4f}")
 print(f"  p-value (two-way):        {result_twoway.pvalues['STMT_x_NFA']:.4f}")
 
 # Z-score interpretation
@@ -647,7 +660,7 @@ for curr in nfa_avg.index:
                     xytext=(0, 10), textcoords='offset points')
 
 ax.set_xlabel('Net Foreign Assets (% of GDP)', fontsize=12, fontweight='bold')
-ax.set_ylabel('Marginal Effect of STMT on FX (%)', fontsize=12, fontweight='bold')
+ax.set_ylabel('Marginal Effect of STMT on Spot Return (%)', fontsize=12, fontweight='bold')
 ax.set_title('Figure 11: How Currency Response to U.S. Monetary Policy\n'
              'Varies with Net Foreign Asset Position',
              fontsize=14, fontweight='bold', pad=15)
@@ -667,14 +680,24 @@ x_pad = (x_max - x_min) * 0.25
 ax.set_xlim(x_min - x_pad, x_max + x_pad)
 
 # Annotation — larger text, more offset for visibility
-ax.annotate('Net debtors\n(smaller response)',
+# With spot return convention: negative effect = depreciation
+# β₂ > 0 means creditors have less negative effect (depreciate less)
+# β₂ < 0 means creditors have more negative effect (depreciate more)
+if b2 > 0:
+    debtor_label = 'Net debtors\n(depreciate more)'
+    creditor_label = 'Net creditors\n(depreciate less)'
+else:
+    debtor_label = 'Net debtors\n(depreciate less)'
+    creditor_label = 'Net creditors\n(depreciate more)'
+
+ax.annotate(debtor_label,
             xy=(nfa_avg.min(), country_me[nfa_avg.idxmin()]),
             xytext=(-30, -40), textcoords='offset points',
             fontsize=11, fontstyle='italic', fontweight='bold',
             arrowprops=dict(arrowstyle='->', color='red', lw=2),
             color='red')
 
-ax.annotate('Net creditors\n(larger response)',
+ax.annotate(creditor_label,
             xy=(nfa_avg.max(), country_me[nfa_avg.idxmax()]),
             xytext=(-60, 30), textcoords='offset points',
             fontsize=11, fontstyle='italic', fontweight='bold',
@@ -719,18 +742,23 @@ bars = ax.bar(categories, responses, yerr=errors,
               error_kw={'linewidth': 2, 'ecolor': 'black'})
 
 ax.axhline(0, color='black', linestyle='-', linewidth=1)
-ax.set_ylabel('FX Response to 10bp Hawkish Surprise (%)', fontsize=11, fontweight='bold')
+ax.set_ylabel('Spot Return to 10bp Hawkish Surprise (%)', fontsize=11, fontweight='bold')
 ax.set_title('Figure 12: Predicted Currency Response\nby Net Foreign Asset Position',
              fontsize=14, fontweight='bold', pad=15)
 ax.grid(axis='y', alpha=0.3)
 
-# Add values on bars — offset right to avoid CI line overlap
+# Add values on bars — handle negative bars (depreciation)
 for bar, val, err in zip(bars, responses, errors):
-    height = bar.get_height()
     sign = '+' if val > 0 else ''
-    ax.text(bar.get_x() + bar.get_width() * 0.85, height + 0.003,
-            f'{sign}{val:.4f}%', ha='left', va='bottom',
-            fontsize=11, fontweight='bold')
+    if val < 0:
+        # Label below the lower CI cap for negative bars
+        ax.text(bar.get_x() + bar.get_width() * 0.85, val - err - 0.003,
+                f'{sign}{val:.4f}%', ha='left', va='top',
+                fontsize=11, fontweight='bold')
+    else:
+        ax.text(bar.get_x() + bar.get_width() * 0.85, val + err + 0.003,
+                f'{sign}{val:.4f}%', ha='left', va='bottom',
+                fontsize=11, fontweight='bold')
 
 plt.tight_layout()
 plt.savefig(f'{BASE}/Output/figure12_predicted_responses.png', dpi=300,
@@ -753,7 +781,7 @@ def fmt_coef(val, pval, dec=4):
 
 latex = r"""\begin{table}[htbp]
 \centering
-\caption{Exchange Rate Responses and Net Foreign Assets}
+\caption{Spot Returns and Net Foreign Assets}
 \label{tab:nfa_panel}
 \begin{tabular}{lcccc}
 \hline\hline
@@ -802,17 +830,19 @@ latex += r"""\hline\hline
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} The dependent variable is the log change in the exchange rate
-(foreign per USD) on FOMC announcement days. $\Delta e > 0$ denotes USD appreciation
-(foreign currency depreciation). STMT is the statement surprise; MP1 is the target
-rate surprise, both in basis points. NFA/GDP is from Lane \& Milesi-Ferretti (EWN,
-2024 update), lagged one year and demeaned so $\beta_1$ represents the effect at
-average NFA. \textbf{Standard errors:} Column (1) clusters by FOMC date, the
-preferred specification because STMT$_t$ is identical across currencies on each
-date, inducing cross-sectional correlation \citep{Petersen2009}. Column (2)
-clusters two-way (country $+$ date) as a conservative robustness check.
-Column (3) clusters by country only; while reported for completeness,
-it is inappropriate as it ignores the common-shock structure.
+\item \textit{Notes:} The dependent variable is the spot return $r_{i,t} = -\Delta\log(e_{i,t})$,
+where $e$ is the foreign-per-USD exchange rate. Positive $r$ denotes foreign currency
+appreciation. This convention matches Antol\'{i}n-D\'{i}az et al.\ (2023), so that
+$\beta_2 > 0$ means creditor countries depreciate less. STMT is the statement surprise;
+MP1 is the target rate surprise, both in basis points. NFA/GDP is from Lane \&
+Milesi-Ferretti (EWN, 2024 update), lagged one year and demeaned so $\beta_1$
+represents the effect at average NFA.
+\textbf{Standard errors:} Column (1) clusters by FOMC date, the preferred
+specification because STMT$_t$ is identical across currencies on each date,
+inducing cross-sectional correlation \citep{Petersen2009}. Column (2) clusters
+two-way (country $+$ date) as a conservative robustness check. Column (3)
+clusters by country only; while reported for completeness, it is inappropriate
+as it ignores the common-shock structure.
 Sample: 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK)
 $\times$ 269 FOMC events, 1994--2024.
 *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
@@ -894,8 +924,9 @@ KEY RESULTS
 ══════════════════════════════════════════════════════════════════════════════════
 
   β2 (STMT × NFA/GDP) = {b2:.6f}  [{sig_label}]
-  Sign: {'Positive — opposite to balance-sheet hypothesis (creditors should depreciate LESS, i.e. β₂ < 0)' if b2 > 0 else 'Negative — consistent with balance-sheet hypothesis (Antolín-Díaz et al. 2023)'}
-  Convention: Δe > 0 = USD appreciation = foreign depreciation; β₂ > 0 means higher NFA → MORE depreciation
+  Convention: Spot return (positive = foreign appreciation)
+  Sign: {'Positive — consistent with Antolín-Díaz et al. (2023): creditors depreciate less' if b2 > 0 else 'Negative — opposite to Antolín-Díaz et al. (2023): creditors depreciate MORE'}
+  Antolín-Díaz prediction: β₂ > 0 (creditors depreciate less)
   p-value (date-clustered):  {pval_main:.4f}
   p-value (two-way cluster): {result_twoway.pvalues['STMT_x_NFA']:.4f}
   
@@ -917,30 +948,31 @@ INTERPRETATION & DISCUSSION
 ══════════════════════════════════════════════════════════════════════════════════
 
   EXCHANGE RATE CONVENTION:
-    e_{{i,t}} is foreign currency per USD (e.g., JPY/USD).
-    Δe > 0 = USD appreciation = foreign currency depreciation.
-    β₂ > 0 ⟹ higher NFA → LARGER Δe → MORE foreign depreciation.
+    Dependent variable: spot return r_{{i,t}} = -Δlog(e_{{i,t}})
+    where e = foreign per USD. Positive r = foreign appreciation.
+    This matches Antolín-Díaz et al. (2023).
+    β₁ < 0 expected: hawkish surprise → foreign depreciation.
+    β₂ > 0 predicted: creditors depreciate LESS (Antolín-Díaz).
 
-  The interaction coefficient β₂ = {b2:.6f} is positive but {sig_label}
-  under date-clustered inference (p = {pval_main:.3f}). The positive sign
-  indicates that higher-NFA (creditor) currencies experience LARGER USD
-  appreciation (more foreign depreciation) following hawkish Fed surprises.
-  This is OPPOSITE to the balance-sheet channel hypothesis of Antolín-Díaz
-  et al. (2023), which predicts that creditor currencies should depreciate
-  LESS (β₂ < 0) because they have fewer USD-denominated liabilities.
+  The interaction coefficient β₂ = {b2:.6f} is {'positive, directionally' if b2 > 0 else 'negative,'}
+  {'consistent with' if b2 > 0 else 'opposite to'} the balance-sheet hypothesis of Antolín-Díaz
+  et al. (2023), but {sig_label} under date-clustered inference
+  (p = {pval_main:.3f}).
 
-  A 10bp hawkish surprise predicts {resp_debtor:.4f}% depreciation for a
-  debtor at the 25th percentile of NFA, versus {resp_creditor:.4f}% for a
-  creditor at the 75th percentile — the marginal effect is {resp_creditor/resp_debtor:.1f}×
-  larger for creditors. However, this difference is not statistically
-  significant, so we cannot reject either direction.
+  A 10bp hawkish surprise predicts a {abs(resp_debtor):.4f}% {'depreciation' if resp_debtor < 0 else 'appreciation'}
+  for a debtor at the 25th percentile of NFA (NFA = {nfa_25:.0f}% GDP),
+  versus {abs(resp_creditor):.4f}% {'depreciation' if resp_creditor < 0 else 'appreciation'} for a creditor at the
+  75th percentile (NFA = {nfa_75:.0f}% GDP). {'Creditors depreciate less,' if b2 > 0 else 'Creditors depreciate more,'}
+  {'consistent with' if b2 > 0 else 'opposite to'} the balance-sheet channel, but the difference is
+  not statistically significant.
 
-  COMPARISON TO PRIOR LITERATURE:
+  {'CONSISTENCY' if b2 > 0 else 'DISCREPANCY'} WITH PRIOR LITERATURE:
 
-  Antolín-Díaz et al. (2023) find creditor countries exhibit SMALLER
-  currency depreciation to U.S. hawkish surprises, consistent with a
-  valuation channel. My point estimate has the opposite sign, but given
-  the imprecision, several factors may explain the discrepancy:
+  Antolín-Díaz et al. (2023) find creditor countries exhibit smaller
+  currency depreciation to U.S. hawkish surprises (β₂ > 0), consistent
+  with a valuation channel. My point estimate {'has the same sign but' if b2 > 0 else 'has the opposite sign, and'}
+  is not statistically significant. Several factors may explain the
+  {'imprecision' if b2 > 0 else 'discrepancy'}:
 
   1. Daily vs. intraday data: Antolín-Díaz use tick-by-tick data in a
      narrow event window. Daily FX changes embed subsequent news and
@@ -969,10 +1001,10 @@ INTERPRETATION & DISCUSSION
   6. Sample period: My sample (1994-2026) includes ZLB, forward guidance,
      and QE periods where traditional transmission channels may not apply.
 
-  The null result is consistent with NFA not being the primary driver of
-  FX heterogeneity in this sample. Using target rate surprises (MP1) instead
-  yields a marginally significant positive β₂ (p = {pval_mp1:.3f}), suggesting
-  any effect may operate through actual rate changes rather than communication.
+  The imprecise estimate is consistent with NFA not being the primary
+  driver of FX heterogeneity in this sample, at least at daily frequency.
+  Using target rate surprises (MP1) instead yields β₂ = \
+  {result_mp1.params['MP1_x_NFA']:.6f} (p = {pval_mp1:.3f}), {'marginally significant' if pval_mp1 < 0.10 else 'also insignificant'}.
   These findings motivate extensions using intraday data, gross external
   positions, or expanded currency samples.
 

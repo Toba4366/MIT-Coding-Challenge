@@ -1,6 +1,6 @@
 \begin{table}[htbp]
 \centering
-\caption{Exchange Rate Responses and Net Foreign Assets}
+\caption{Spot Returns and Net Foreign Assets}
 \label{tab:nfa_panel}
 \begin{tabular}{lcccc}
 \hline\hline
@@ -8,13 +8,13 @@
  & Main & Two-Way & Country & MP1 \\
  & (Date Cl.) & (Two-Way Cl.) & (Country Cl.) & (Date Cl.) \\
 \hline
-STMT & 0.5978 & 0.5978 & 0.5978*** & \\
+STMT & -0.5978 & -0.5978 & -0.5978*** & \\
  & (0.6176) & (0.4953) & (0.2160) & \\
-MP1 & & & & -0.0216 \\
+MP1 & & & & 0.0216 \\
  & & & & (0.4489) \\
-Surprise $\times$ NFA/GDP & 0.0048 & 0.0048 & 0.0048 & 0.0162* \\
+Surprise $\times$ NFA/GDP & -0.0048 & -0.0048 & -0.0048 & -0.0162* \\
  & (0.0067) & (0.0036) & (0.0051) & (0.0091) \\
-NFA/GDP & -0.0004 & -0.0004** & -0.0004*** & -0.0003 \\
+NFA/GDP & 0.0004 & 0.0004** & 0.0004*** & 0.0003 \\
  & (0.0004) & (0.0002) & (0.0001) & (0.0004) \\
 \hline
 Country FE & Yes & Yes & Yes & Yes \\
@@ -26,17 +26,19 @@ $R^2$ & 0.0014 & 0.0014 & 0.0014 & 0.0059 \\
 \end{tabular}
 \begin{tablenotes}
 \small
-\item \textit{Notes:} The dependent variable is the log change in the exchange rate
-(foreign per USD) on FOMC announcement days. $\Delta e > 0$ denotes USD appreciation
-(foreign currency depreciation). STMT is the statement surprise; MP1 is the target
-rate surprise, both in basis points. NFA/GDP is from Lane \& Milesi-Ferretti (EWN,
-2024 update), lagged one year and demeaned so $\beta_1$ represents the effect at
-average NFA. \textbf{Standard errors:} Column (1) clusters by FOMC date, the
-preferred specification because STMT$_t$ is identical across currencies on each
-date, inducing cross-sectional correlation \citep{Petersen2009}. Column (2)
-clusters two-way (country $+$ date) as a conservative robustness check.
-Column (3) clusters by country only; while reported for completeness,
-it is inappropriate as it ignores the common-shock structure.
+\item \textit{Notes:} The dependent variable is the spot return $r_{i,t} = -\Delta\log(e_{i,t})$,
+where $e$ is the foreign-per-USD exchange rate. Positive $r$ denotes foreign currency
+appreciation. This convention matches Antol\'{i}n-D\'{i}az et al.\ (2023), so that
+$\beta_2 > 0$ means creditor countries depreciate less. STMT is the statement surprise;
+MP1 is the target rate surprise, both in basis points. NFA/GDP is from Lane \&
+Milesi-Ferretti (EWN, 2024 update), lagged one year and demeaned so $\beta_1$
+represents the effect at average NFA.
+\textbf{Standard errors:} Column (1) clusters by FOMC date, the preferred
+specification because STMT$_t$ is identical across currencies on each date,
+inducing cross-sectional correlation \citep{Petersen2009}. Column (2) clusters
+two-way (country $+$ date) as a conservative robustness check. Column (3)
+clusters by country only; while reported for completeness, it is inappropriate
+as it ignores the common-shock structure.
 Sample: 8 currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK)
 $\times$ 269 FOMC events, 1994--2024.
 *** $p<0.01$, ** $p<0.05$, * $p<0.10$.
