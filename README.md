@@ -192,7 +192,7 @@ MIT Coding Challenge/
 
 - Acosta, M., Ajello, A., Bauer, M., Loria, F., & Miranda-Agrippino, S. (2025). Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database. FRB San Francisco Working Paper 2025-30.
 - Antol´ın-D´ıaz, J., Cenedese, G., Han, S., & Sarno, L. (2023). U.S. Interest Rate Surprises and Currency Returns. SSRN Working Paper
-- Bauer, M. D., & Swanson, E. T. (2022). "A Reassessment of Monetary Policy Surprises and High-Frequency Identification." *NBER Macroeconomics Annual*, 37.
+- Bauer, M. D., & Swanson, E. T. (2023). "A Reassessment of Monetary Policy Surprises and High-Frequency Identification." *NBER Macroeconomics Annual*, 37.
 - Bruno, V., & Shin, H. S. (2015). "Cross-border Banking and Global Liquidity." *Review of Economic Studies*, 82(2), 535–564.
 - Lane, P. R., & Milesi-Ferretti, G. M. (2018). "The External Wealth of Nations Revisited." *IMF Economic Review*, 66(1), 189–222.
 - Petersen, M. A. (2009). "Estimating Standard Errors in Finance Panel Data Sets." *Review of Financial Studies*, 22(1), 435–480.
