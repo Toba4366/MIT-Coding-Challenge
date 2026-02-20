@@ -28,7 +28,7 @@ Evidence from High-Frequency Identification}
 \maketitle
 
 \begin{abstract}
-I examine the transmission of U.S. monetary policy surprises to G10 exchange rates using high-frequency identification. Combining federal funds futures surprises with daily spot exchange rates for eight currencies (1994--2024), I document three findings. First, U.S. Treasury yields respond strongly to monetary policy surprises, validating the identification strategy. Second, daily exchange rate responses are heterogeneous and imprecisely estimated, with $R^2$ values below 1\%. Third, cross-country net foreign asset positions (NFA/GDP) do not robustly explain heterogeneity in FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. These null results do not reject the theoretical relevance of balance-sheet channels; rather, they indicate that within a G10 daily-frequency event-study design, net external positions are not a sufficient statistic for currency exposure to U.S. monetary shocks.
+I examine the transmission of U.S. monetary policy surprises to major currency exchange rates using high-frequency identification. Combining federal funds futures surprises with daily spot exchange rates for eight currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK; 1994--2024), I document three findings. First, U.S. Treasury yields respond strongly to monetary policy surprises, validating the identification strategy. Second, daily exchange rate responses are heterogeneous and imprecisely estimated, with $R^2$ values below 1\%. Third, cross-country net foreign asset positions (NFA/GDP) do not robustly explain heterogeneity in FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. These null results do not reject the theoretical relevance of balance-sheet channels; rather, they indicate that within an advanced-economy daily-frequency event-study design, net external positions are not a sufficient statistic for currency exposure to U.S. monetary shocks.
 \end{abstract}
 
 \newpage
@@ -41,7 +41,7 @@ I examine the transmission of U.S. monetary policy surprises to G10 exchange rat
 
 Understanding how U.S. monetary policy transmits to international asset prices is central to open-economy macroeconomics. The Federal Reserve's policy decisions affect global financial conditions through multiple channels: interest rate differentials, portfolio rebalancing, risk premia, and valuation effects on dollar-denominated assets \citep{rey2015dilemma, bruno2015cross}.
 
-This paper uses high-frequency identification to isolate exogenous monetary policy surprises and trace their effects on G10 exchange rates. Following \citet{bauer2023reassessment}, I decompose FOMC announcement effects into target rate surprises (MP1) and forward guidance/statement surprises (STMT). I then test a specific mechanism: whether cross-country differences in external balance sheet positions---measured by net foreign assets relative to GDP---explain heterogeneity in exchange rate responses, as suggested by \citet{antolin2023advances}.
+This paper uses high-frequency identification to isolate exogenous monetary policy surprises and trace their effects on major currency exchange rates. Following \citet{bauer2023reassessment}, I decompose FOMC announcement effects into target rate surprises (MP1) and forward guidance/statement surprises (STMT). I then test a specific mechanism: whether cross-country differences in external balance sheet positions---measured by net foreign assets relative to GDP---explain heterogeneity in exchange rate responses, as suggested by the global liquidity literature \citep{bruno2015cross, rey2015dilemma}.
 
 \textbf{Why this matters}: The balance-sheet channel is central to modern international macro-finance. If countries with larger dollar liabilities (negative NFA) experience larger depreciations on Fed tightening, this has implications for global financial stability, optimal reserve holdings, and the international monetary system. Testing this mechanism in clean high-frequency data disciplines the growing literature on dollar dominance and U.S. policy spillovers \citep{gopinath2020dominant}.
 
@@ -53,7 +53,7 @@ The empirical strategy proceeds in four steps:
     \item \textbf{Regime variation} (Section~\ref{sec:regimes}): I test whether the NFA channel strengthens post-GFC or during high-VIX stress episodes.
 \end{enumerate}
 
-The main findings are: (i) Treasury yields respond approximately 1.0 basis points per 1 basis point STMT surprise, validating identification; (ii) FX responses are heterogeneous but imprecisely estimated ($R^2 < 0.01$); (iii) NFA/GDP does not robustly mediate FX responses in any specification. These null results are informative, not discouraging: they imply that \textbf{in advanced economies, net external positions are not a sufficient statistic for currency exposure to U.S. monetary shocks at daily frequency}. This disciplines the mechanism---if balance-sheet effects operate in G10, they require gross currency mismatch data or longer horizons to detect.
+The main findings are: (i) Treasury yields respond approximately 1.0 basis points per 1 basis point STMT surprise, validating identification; (ii) FX responses are heterogeneous but imprecisely estimated ($R^2 < 0.01$); (iii) NFA/GDP does not robustly mediate FX responses in any specification. These null results are informative, not discouraging: they imply that \textbf{in advanced economies, net external positions are not a sufficient statistic for currency exposure to U.S. monetary shocks at daily frequency}. This disciplines the mechanism---if balance-sheet effects operate, they require gross currency mismatch data or longer horizons to detect.
 
 %==============================================================================
 \section{Data and Methodology}
@@ -73,13 +73,13 @@ I focus on STMT as the baseline shock because it summarizes both dimensions of m
 
 \subsection{Exchange Rate Data}
 
-Daily spot exchange rates for eight G10 currencies: AUD, CAD, CHF, EUR, GBP, JPY, MXN, and NOK. I express rates as foreign currency per USD (e.g., JPY/USD = 150).
+Daily spot exchange rates for eight major currencies: AUD, CAD, CHF, EUR, GBP, JPY, MXN, and NOK. I express rates as foreign currency per USD (e.g., JPY/USD = 150).
 
 \textbf{Convention}: The dependent variable is the spot return:
 \begin{equation}
 r_{i,t} = -\Delta\log(e_{i,t})
 \end{equation}
-where $e_{i,t}$ is foreign currency per USD. Under this convention, $r > 0$ indicates foreign appreciation (USD depreciation). This matches \citet{antolin2023advances}, ensuring coefficient signs are directly comparable.
+where $e_{i,t}$ is foreign currency per USD. Under this convention, $r > 0$ indicates foreign appreciation (USD depreciation).
 
 \subsection{Net Foreign Asset Data}
 
@@ -156,7 +156,7 @@ Table~\ref{tab:fx_response} and Figure~\ref{fig:fx_coefficients} show the result
 
 \subsection{Hypothesis}
 
-Countries with negative NFA (net debtors) hold USD-denominated liabilities. A hawkish Fed surprise tightens their financial conditions, potentially causing larger currency depreciation. Following \citet{antolin2023advances}, I test:
+Countries with negative NFA (net debtors) hold USD-denominated liabilities. A hawkish Fed surprise tightens their financial conditions, potentially causing larger currency depreciation. Following \citet{bruno2015cross}, I test:
 
 \textbf{Balance-sheet hypothesis}: $\beta_2 > 0$ (creditor currencies depreciate less than debtors).
 
@@ -196,7 +196,7 @@ The null result is consistent with several explanations:
 \begin{enumerate}
     \item \textbf{Daily frequency noise}: FX returns are dominated by non-monetary factors, limiting power.
     \item \textbf{Gross vs.\ net positions}: Net NFA may not capture gross currency exposures that drive valuation effects.
-    \item \textbf{Sample composition}: G10 excludes emerging markets with higher dollar debt shares.
+    \item \textbf{Sample composition}: This sample excludes emerging markets with higher dollar debt shares.
     \item \textbf{Information channel}: The Fed information effect may offset valuation channels.
 \end{enumerate}
 
@@ -219,7 +219,7 @@ A key question is whether this null is a ``precise zero'' or a ``noisy zero.'' T
 \begin{equation}
 N^* = \left(\frac{2.8 \times \hat{\sigma}_{\varepsilon}}{\beta_2 \times \sigma_{\text{NFA}} \times \sigma_{\text{STMT}}}\right)^2 \approx 8,000 \text{ observations}
 \end{equation}
-implying roughly 30 currencies would be needed---substantially more than the 8 G10 currencies available.
+implying roughly 30 currencies would be needed---substantially more than the 8 currencies available.
 
 \textbf{Conclusion}: The null is \textit{imprecisely estimated}---we lack power to detect moderate balance-sheet effects. But the CI rules out economically large effects within this sample.
 
@@ -266,7 +266,7 @@ Figure~\ref{fig:time_variation_marginal} plots the implied marginal effects by N
 
 Figure~\ref{fig:time_variation_coef} summarizes this in coefficient form: the interaction component that would capture ``post-GFC amplification'' is not precisely estimated.
 
-\textbf{Economic interpretation}: For STMT, the NFA slope shifts from $-0.015$ (pre-GFC) to $+0.007$ (post-GFC). Importantly, the \textit{baseline} estimate is opposite-signed to theory ($\beta_2 < 0$), so the post-GFC movement represents a shift \textit{toward} the Antol\'{i}n-D\'{i}az prediction ($\beta_2 > 0$)---but the change is statistically insignificant, and neither regime delivers a positive estimate that is reliably distinguishable from zero. With NFA SD $\approx 70$ percentage points:
+\textbf{Economic interpretation}: For STMT, the NFA slope shifts from $-0.015$ (pre-GFC) to $+0.007$ (post-GFC). Importantly, the \textit{baseline} estimate is opposite-signed to theory ($\beta_2 < 0$), so the post-GFC movement represents a shift \textit{toward} the Bruno--Shin prediction ($\beta_2 > 0$)---but the change is statistically insignificant, and neither regime delivers a positive estimate that is reliably distinguishable from zero. With NFA SD $\approx 70$ percentage points:
 \begin{itemize}
     \item Pre-GFC: 1 SD NFA $\rightarrow$ $-1.05$ pp sensitivity shift
     \item Post-GFC: 1 SD NFA $\rightarrow$ $+0.49$ pp sensitivity shift
@@ -302,7 +302,7 @@ Figure~\ref{fig:vix_marginal} shows that the implied NFA slope does not steepen 
 
 \subsection{Interpreting Null Results}
 
-The absence of statistically robust NFA mediation---unconditionally, post-GFC, or in high-VIX regimes---does not imply monetary policy has no international spillovers. Rather, it suggests that within a G10 daily-frequency event-study design, \textbf{net} external positions (NFA/GDP) are not a sufficient statistic for balance-sheet exposure.
+The absence of statistically robust NFA mediation---unconditionally, post-GFC, or in high-VIX regimes---does not imply monetary policy has no international spillovers. Rather, it suggests that within an advanced-economy daily-frequency event-study design, \textbf{net} external positions (NFA/GDP) are not a sufficient statistic for balance-sheet exposure.
 
 This is consistent with:
 \begin{itemize}
@@ -318,7 +318,7 @@ The results discipline the mechanism: if a balance-sheet channel exists in these
 \section{Conclusion}
 %==============================================================================
 
-This paper examines the transmission of U.S. monetary policy surprises to G10 exchange rates using high-frequency identification. The main findings are:
+This paper examines the transmission of U.S. monetary policy surprises to major currency exchange rates using high-frequency identification. The main findings are:
 
 \begin{enumerate}
     \item \textbf{Strong domestic transmission}: Treasury yields respond significantly to surprises ($\sim$1.0 bp per 1 bp STMT shock), validating identification.
@@ -328,7 +328,7 @@ This paper examines the transmission of U.S. monetary policy surprises to G10 ex
     \item \textbf{No robust NFA channel}: Net foreign asset positions do not systematically explain FX heterogeneity---neither unconditionally, post-2008, nor during high-volatility episodes.
 \end{enumerate}
 
-These null results are informative, not discouraging. They discipline the mechanism: in G10 daily data, NFA/GDP is not a sufficient statistic for balance-sheet exposure to U.S. monetary shocks. The 95\% CI rules out economically large effects ($>$20\% of daily FX volatility), providing a meaningful bound on the channel's magnitude at this frequency.
+These null results are informative, not discouraging. They discipline the mechanism: in advanced-economy daily data, NFA/GDP is not a sufficient statistic for balance-sheet exposure to U.S. monetary shocks. The 95\% CI rules out economically large effects ($>$20\% of daily FX volatility), providing a meaningful bound on the channel's magnitude at this frequency.
 
 Extensions using intraday data, gross position measures, or expanded currency samples (including emerging markets with higher dollar debt shares) may yield sharper identification. The findings do not reject the theoretical relevance of external balance sheets---rather, they clarify the conditions under which this channel is empirically detectable.
 
@@ -336,11 +336,6 @@ Extensions using intraday data, gross position measures, or expanded currency sa
 \newpage
 \bibliographystyle{apalike}
 \begin{thebibliography}{99}
-
-\bibitem[Antolín-Díaz et al., 2023]{antolin2023advances}
-Antolín-Díaz, J., Drechsel, T., \& Petrella, I. (2023).
-\newblock Advances in nowcasting economic activity: The role of heterogeneous dynamics and fat tails.
-\newblock \textit{Journal of Econometrics}, 237(2), 105501.
 
 \bibitem[Bauer and Swanson, 2023]{bauer2023reassessment}
 Bauer, M. D., \& Swanson, E. T. (2023).
@@ -461,7 +456,7 @@ NOK & $-0.0051$ & 0.0107 & $-0.48$ & 0.634 & 0.001 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize \textit{Notes}: Dependent variable is spot return $r_{i,t} = -\Delta\log(e_{i,t})$; positive = foreign appreciation. Signs flipped from raw log-change to match Antol\'{i}n-D\'{i}az et al.\ (2023) convention. Heteroskedasticity-robust SEs. 229--270 FOMC events depending on currency.
+\footnotesize \textit{Notes}: Dependent variable is spot return $r_{i,t} = -\Delta\log(e_{i,t})$; positive = foreign appreciation. This convention ensures $r > 0$ represents foreign appreciation (USD depreciation). Heteroskedasticity-robust SEs. 229--270 FOMC events depending on currency.
 \end{flushleft}
 \end{table}
 
@@ -577,7 +572,7 @@ Wald p-value ($\beta_t = \beta_{\text{lead}}$) & & & 0.334 \\
 \bottomrule
 \end{tabular}
 \begin{flushleft}
-\footnotesize \textit{Notes}: Panel regression of FX returns (in bps) on STMT surprise (in bps). The lead coefficient is imprecisely estimated, consistent with sampling noise in daily FX. The Wald test fails to reject equality of coefficients: no evidence future shocks predict better than current shocks. Standard errors clustered by FOMC date.
+\footnotesize \textit{Notes}: Panel regression of FX returns (in bps) on STMT surprise (in bps). Uses the balanced subset of 228 FOMC dates with complete FX data for all 8 currencies (N = 1,824 = 228 $\times$ 8). The lead coefficient is imprecisely estimated, consistent with sampling noise in daily FX. The Wald test fails to reject equality of coefficients: no evidence future shocks predict better than current shocks. Standard errors clustered by FOMC date.
 \end{flushleft}
 \end{table}
 
