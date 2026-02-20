@@ -1,0 +1,19 @@
+# MIT Coding Challenge - Python Dependencies
+# ==========================================
+# Install with: pip install -r requirements.txt
+
+# Core data analysis
+pandas>=1.5.0
+numpy>=1.21.0
+
+# Visualization
+matplotlib>=3.5.0
+seaborn>=0.12.0
+
+# Econometrics & statistics
+statsmodels>=0.13.0
+scipy>=1.9.0
+linearmodels>=5.0      # Panel data regression (PanelOLS)
+
+# Optional (used if available)
+# yfinance>=0.2.0      # For downloading VIX data (fallback to synthetic if unavailable)
