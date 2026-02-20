@@ -211,7 +211,7 @@ A key question is whether this null is a ``precise zero'' or a ``noisy zero.'' T
 \beta_2 \in [-0.018, +0.008]
 \end{equation}
 
-\textbf{What this rules out}: A 1 SD increase in NFA could shift FX sensitivity by at most $0.018 \times 70 = 1.26$ percentage points per basis point of shock. For a 10bp surprise, this translates to at most $\pm 0.13\%$ differential FX movement between a debtor (P25) and creditor (P75).
+\textbf{What this rules out}: A 1 SD increase in NFA could shift FX sensitivity by at most $0.018 \times 70 = 1.26$ percentage points per basis point of shock. For a 10bp surprise, this translates to at most $\pm 0.13\%$ differential FX movement between a debtor (P25) and creditor (P75). Put differently, the 95\% CI rules out any NFA-mediated effect larger than 20\% of daily FX volatility.
 
 \textbf{Economically meaningful?} The average daily FX volatility in the sample is approximately 0.6\%. A 0.13\% differential is roughly 20\% of daily volatility---economically modest but not negligible. The data therefore rule out \textit{large} balance-sheet effects (e.g., creditors depreciating 0.5\% less than debtors on a 10bp shock) but cannot rule out smaller effects that might cumulate over time or become detectable with intraday data.
 
@@ -225,7 +225,7 @@ implying roughly 30 currencies would be needed---substantially more than the 8 G
 
 \subsection{Falsification: Placebo Shock Timing}
 
-A standard causal discipline check is whether \textit{future} shocks predict \textit{current} FX returns. If identification is valid, the lead of the shock ($\text{STMT}_{t+1}$) should have no predictive power.
+A standard causal discipline check is whether \textit{future} shocks predict \textit{current} FX returns. If identification is valid, the lead of the shock ($\text{STMT}_{t+1}$) should have no predictive power. Here, ``$t+1$'' denotes the \textit{next FOMC event}, not the next calendar day---this aligns the placebo to the monetary policy event calendar.
 
 Table~\ref{tab:placebo} reports placebo regressions. Neither the contemporaneous nor the lead shock is statistically significant in this simple specification. The lead coefficient is economically large ($\hat{\beta} = 1.76$) but imprecisely estimated (SE $= 1.53$), consistent with sampling noise in a low-signal daily FX setting---this is a \textit{noisy zero}, not a \textit{precise zero}. The difference in $R^2$ ($0.001$ vs $0.009$) is economically trivial given the low baseline explanatory power.
 
@@ -328,9 +328,9 @@ This paper examines the transmission of U.S. monetary policy surprises to G10 ex
     \item \textbf{No robust NFA channel}: Net foreign asset positions do not systematically explain FX heterogeneity---neither unconditionally, post-2008, nor during high-volatility episodes.
 \end{enumerate}
 
-These null results are informative, not discouraging. They rule out large NFA-mediated effects in G10 daily data and highlight the empirical challenges of detecting balance-sheet channels at this frequency. Extensions using intraday data, gross position measures, or expanded currency samples (including emerging markets with higher dollar debt shares) may yield sharper identification.
+These null results are informative, not discouraging. They discipline the mechanism: in G10 daily data, NFA/GDP is not a sufficient statistic for balance-sheet exposure to U.S. monetary shocks. The 95\% CI rules out economically large effects ($>$20\% of daily FX volatility), providing a meaningful bound on the channel's magnitude at this frequency.
 
-The findings do not reject the theoretical relevance of external balance sheets for monetary policy transmission. Rather, they indicate that within this specific framework---G10 currencies, daily frequency, net positions---the balance-sheet channel is either small, offset by other forces, or operative through channels not captured by NFA/GDP.
+Extensions using intraday data, gross position measures, or expanded currency samples (including emerging markets with higher dollar debt shares) may yield sharper identification. The findings do not reject the theoretical relevance of external balance sheets---rather, they clarify the conditions under which this channel is empirically detectable.
 
 %==============================================================================
 \newpage
