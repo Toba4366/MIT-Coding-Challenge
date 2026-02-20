@@ -4,7 +4,16 @@
 
 This repository contains my solutions to the MIT Coding Challenge, analyzing the transmission of U.S. monetary policy surprises to exchange rates and testing whether external balance sheets (NFA/GDP) mediate this transmission.
 
-**Key Finding:** Within a G10 daily-frequency framework, we do not find statistically robust evidence that NFA/GDP systematically mediates FX responses to U.S. monetary surprises—neither unconditionally, post-GFC, nor during stress episodes.
+**Key Finding:** Within a daily-frequency framework using 8 major currencies, we do not find statistically robust evidence that NFA/GDP systematically mediates FX responses to U.S. monetary surprises—neither unconditionally, post-GFC, nor during stress episodes.
+
+---
+
+## Writeup Documents
+
+| Document | Description |
+|----------|-------------|
+| [`Output/writeup.pdf`](Output/writeup.pdf) | **Main submission** (~5 pages text + tables/figures) |
+| [`Output/writeup_v2.pdf`](Output/writeup_v2.pdf) | Extended version with additional robustness checks |
 
 ---
 
@@ -66,7 +75,7 @@ MIT Coding Challenge/
 
 ### Task 1: Data Preparation
 - Merged Bauer-Swanson monetary policy surprises (STMT, MP1, MP2) with daily FX log-changes and Treasury yield changes
-- Sample: 269 FOMC announcements (1994–2025), 8 G10 currencies
+- Sample: 274 FOMC announcements (1994–2024), 8 major currencies (AUD, CAD, CHF, EUR, GBP, JPY, MXN, NOK)
 - Output: `merged_fomc_data.csv`, summary statistics
 
 ### Task 2: Event-Study Regressions
@@ -77,7 +86,7 @@ MIT Coding Challenge/
 ### Task 3: Panel Regression with NFA Interaction
 - Specification: `r_{i,t} = α_i + β₁·Surprise + β₂·(Surprise × NFA) + ε`
 - FX convention: Spot return `r = −Δlog(e)`, positive = foreign appreciation
-- Result: β₂ ≈ −0.005 (p = 0.48), opposite to Antolín-Díaz et al. (2023) prediction
+- Result: β₂ ≈ −0.005 (p = 0.48), opposite to Bruno-Shin prediction
 - NFA/GDP does not robustly explain cross-currency heterogeneity
 
 ### Task 4: Time Variation
@@ -95,7 +104,7 @@ MIT Coding Challenge/
 | Choice | Rationale |
 |--------|-----------|
 | **Date clustering** | Monetary shocks are common across currencies on FOMC dates (Petersen 2009) |
-| **Spot return convention** | `r = −Δlog(e)` so positive = foreign appreciation, matching Antolín-Díaz |
+| **Spot return convention** | `r = −Δlog(e)` so positive = foreign appreciation |
 | **Demeaned NFA** | Β₁ interpretable as effect at mean NFA |
 | **Entity fixed effects** | Control for currency-specific level differences |
 
@@ -130,18 +139,16 @@ MIT Coding Challenge/
 4. **3.4:** No robust post-GFC amplification (STMT sign flip suggestive but imprecise)
 5. **3.4b:** No stress-state amplification (VIX interaction insignificant)
 
-**Conclusion:** Within a G10 daily-frequency framework, we do not find statistically robust evidence that NFA/GDP systematically mediates FX responses to U.S. monetary surprises. This null is disciplined and informative—G10 currencies may not exhibit the balance-sheet sensitivity theorized for emerging markets with higher dollar debt exposure.
+**Conclusion:** Within a daily-frequency framework using major currencies, we do not find statistically robust evidence that NFA/GDP systematically mediates FX responses to U.S. monetary surprises. This null is disciplined and informative—developed-market currencies may not exhibit the balance-sheet sensitivity theorized for emerging markets with higher dollar debt exposure.
 
 ---
 
 ## References
 
-- Antolín-Díaz, J., Drechsel, T., & Petrella, I. (2023). "Advances in Nowcasting Economic Activity"
-- Bauer, M. D., & Swanson, E. T. (2023). "A Reassessment of Monetary Policy Surprises and High-Frequency Identification"
-- Bruno, V., & Shin, H. S. (2015). "Cross-border Banking and Global Liquidity"
-- Lane, P. R., & Milesi-Ferretti, G. M. (2018). "The External Wealth of Nations Revisited"
-- Petersen, M. A. (2009). "Estimating Standard Errors in Finance Panel Data Sets"
-- Rey, H. (2015). "Dilemma not Trilemma: The Global Financial Cycle and Monetary Policy Independence"
+- Bauer, M. D., & Swanson, E. T. (2022). "A Reassessment of Monetary Policy Surprises and High-Frequency Identification." *NBER Macroeconomics Annual*, 37.
+- Bruno, V., & Shin, H. S. (2015). "Cross-border Banking and Global Liquidity." *Review of Economic Studies*, 82(2), 535–564.
+- Lane, P. R., & Milesi-Ferretti, G. M. (2018). "The External Wealth of Nations Revisited." *IMF Economic Review*, 66(1), 189–222.
+- Petersen, M. A. (2009). "Estimating Standard Errors in Finance Panel Data Sets." *Review of Financial Studies*, 22(1), 435–480.
 
 ---
 
