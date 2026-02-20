@@ -4,12 +4,16 @@ Clarify what 'PC' means in USMPD and make final recommendation
 
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Load all relevant data
-me = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Monetary Events')
-stmt = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Statements')
-pc_sheet = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Press Conferences')
-mps = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Data/monetary-policy-surprises/mps.csv')
+me = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Monetary Events')
+stmt = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Statements')
+pc_sheet = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Press Conferences')
+mps = pd.read_csv(os.path.join(BASE, 'Data/monetary-policy-surprises/mps.csv'))
 
 print('='*80)
 print('CRITICAL DISCOVERY: What is PC in USMPD?')

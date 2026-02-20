@@ -3,9 +3,13 @@ FX Convention Deep Dive - What's actually happening?
 """
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Load the raw FX data
-fx = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/Exchange_Rates.xlsx', 
+fx = pd.read_excel(os.path.join(BASE, 'Data/Exchange_Rates.xlsx'), 
                    sheet_name='Daily')
 fx['Date'] = pd.to_datetime(fx['observation_date'])
 
@@ -82,7 +86,7 @@ But we see NEGATIVE d_AUD. Let me check the math...
 """)
 
 # Recompute manually
-merged = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/merged_fomc_data.csv')
+merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 merged['Date'] = pd.to_datetime(merged['Date'])
 row = merged[merged['Date'] == date_check]
 print(f"\nIn merged data for {date_check}:")

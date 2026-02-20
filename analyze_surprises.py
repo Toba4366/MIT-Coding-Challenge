@@ -5,9 +5,13 @@ Analyze monetary policy surprise measures to choose the best one for research
 
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Load the data
-df = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Statements')
+df = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Statements')
 
 print("="*80)
 print("USMPD SURPRISE MEASURES - COMPREHENSIVE ANALYSIS")

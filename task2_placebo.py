@@ -7,16 +7,20 @@ If identification is valid, the lead shock coefficient should be ≈ 0.
 
 import pandas as pd
 import numpy as np
+import os
 from linearmodels.panel import PanelOLS
 import warnings
 warnings.filterwarnings('ignore')
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 print("="*70)
 print("PLACEBO TEST: Does STMT_{t+1} Predict Current FX Returns?")
 print("="*70)
 
 # Load merged FOMC data
-merged = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/merged_fomc_data.csv')
+merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 merged['Date'] = pd.to_datetime(merged['Date'])
 merged = merged.sort_values('Date').reset_index(drop=True)
 
@@ -166,7 +170,7 @@ results_df = pd.DataFrame({
 results_df['wald_stat'] = [np.nan, np.nan, wald_stat]
 results_df['wald_pval'] = [np.nan, np.nan, wald_pval]
 
-results_df.to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/placebo_results.csv', index=False)
+results_df.to_csv(os.path.join(BASE, 'Output/placebo_results.csv'), index=False)
 print("\n✓ Results saved to Output/placebo_results.csv")
 
 # ============================================================================
@@ -218,7 +222,7 @@ Wald p-value ($\beta_t = \beta_{{t+1}}$) & & & {wald_pval:.3f} \\
 \end{{table}}
 """
 
-with open('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table8_placebo.tex', 'w') as f:
+with open(os.path.join(BASE, 'Output/table8_placebo.tex'), 'w') as f:
     f.write(latex_table)
 
 print("✓ LaTeX table saved to Output/table8_placebo.tex")

@@ -35,7 +35,7 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-BASE = '/Users/trentonobannontrenton/MIT Coding Challenge'
+BASE = os.path.dirname(os.path.abspath(__file__))
 os.makedirs(f'{BASE}/Output', exist_ok=True)
 
 print("=" * 80)

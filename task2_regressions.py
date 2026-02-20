@@ -19,8 +19,11 @@ import matplotlib.pyplot as plt
 import os
 from scipy import stats
 
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
+
 # Create output directory
-os.makedirs('/Users/trentonobannontrenton/MIT Coding Challenge/Output', exist_ok=True)
+os.makedirs(os.path.join(BASE, 'Output'), exist_ok=True)
 
 print("="*80)
 print("TASK 2: ASSET PRICE RESPONSES TO MONETARY POLICY SURPRISES")
@@ -30,7 +33,7 @@ print("="*80)
 # LOAD DATA
 # ============================================================================
 
-merged = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/merged_fomc_data.csv')
+merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 merged['Date'] = pd.to_datetime(merged['Date'])
 
 print(f"\nLoaded: {len(merged)} FOMC events")
@@ -201,7 +204,7 @@ def get_stars(pval):
 results_df['stars'] = results_df['pval'].apply(get_stars)
 
 # Save
-results_df.to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/task2_regression_results.csv', 
+results_df.to_csv(os.path.join(BASE, 'Output/') + 'task2_regression_results.csv', 
                   index=False)
 print("\n\nSaved: Output/task2_regression_results.csv")
 
@@ -243,7 +246,7 @@ def create_latex_table(df):
     return "\n".join(latex)
 
 latex_table = create_latex_table(results_df)
-with open('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table2_regression_results.tex', 'w') as f:
+with open(os.path.join(BASE, 'Output/') + 'table2_regression_results.tex', 'w') as f:
     f.write(latex_table)
 print("Saved: Output/table2_regression_results.tex")
 
@@ -335,7 +338,7 @@ ax.annotate('Short rates respond\nmore than long rates',
             arrowprops=dict(arrowstyle='->', color='black', lw=1.5))
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure7_term_structure.png', 
+plt.savefig(os.path.join(BASE, 'Output/') + 'figure7_term_structure.png', 
             dpi=300, bbox_inches='tight', facecolor='white')
 plt.close()
 print("Saved: Output/figure7_term_structure.png")
@@ -389,7 +392,7 @@ ax.annotate('Positive β → USD appreciates\n(foreign currency depreciates)',
             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure8_fx_heterogeneity.png', 
+plt.savefig(os.path.join(BASE, 'Output/') + 'figure8_fx_heterogeneity.png', 
             dpi=300, bbox_inches='tight', facecolor='white')
 plt.close()
 print("Saved: Output/figure8_fx_heterogeneity.png")
@@ -451,7 +454,7 @@ ax.legend(handles=legend_elements, fontsize=9, loc='lower right')
 plt.suptitle('Figure 9: Coefficient Plot - All Asset Responses', 
              fontsize=14, fontweight='bold', y=1.02)
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure9_coefficient_plot.png', 
+plt.savefig(os.path.join(BASE, 'Output/') + 'figure9_coefficient_plot.png', 
             dpi=300, bbox_inches='tight', facecolor='white')
 plt.close()
 print("Saved: Output/figure9_coefficient_plot.png")
@@ -467,7 +470,7 @@ print("="*80)
 fx_betas = results_df[results_df['asset_class'] == 'FX'][['asset', 'beta', 'se', 'tstat', 'pval', 'N', 'R2']].copy()
 fx_betas = fx_betas.rename(columns={'asset': 'currency'})
 fx_betas = fx_betas.set_index('currency')
-fx_betas.to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/task2_country_betas.csv')
+fx_betas.to_csv(os.path.join(BASE, 'Output/') + 'task2_country_betas.csv')
 print("Saved: Output/task2_country_betas.csv")
 print(fx_betas.to_string())
 

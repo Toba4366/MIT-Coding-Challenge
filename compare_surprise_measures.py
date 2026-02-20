@@ -4,14 +4,18 @@ Compare ALL available surprise measures to help choose the best one
 
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 print("="*90)
 print("COMPREHENSIVE COMPARISON OF ALL SURPRISE MEASURES")
 print("="*90)
 
 # Load both datasets
-usmpd = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Statements')
-mps = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Data/monetary-policy-surprises/mps.csv')
+usmpd = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Statements')
+mps = pd.read_csv(os.path.join(BASE, 'Data/monetary-policy-surprises/mps.csv'))
 
 # Merge on date
 usmpd['Date'] = pd.to_datetime(usmpd['Date']).dt.date

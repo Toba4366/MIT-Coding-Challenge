@@ -47,25 +47,24 @@ MIT Coding Challenge/
 │   ├── monetary-policy-surprises/
 │   │   ├── mps.csv              # Bauer-Swanson monetary policy surprises
 │   │   └── README.md            # Data documentation
-│   ├── daily-treasury-rates*.csv # Treasury yield data
-│   └── par-yield-curve-rates*.csv
+│   ├── daily-treasury-rates*.csv # Treasury yield data (2024-2026)
+│   └── par-yield-curve-rates*.csv # Historical par yield curves
 │
-├── Output/                       # Generated outputs
-│   ├── table1_summary_stats.tex  # Summary statistics (LaTeX)
-│   ├── table2_regression_results.tex  # Event-study regressions
-│   ├── table3_panel_regression.tex    # NFA interaction panel
-│   ├── table4_time_variation.tex      # Post-GFC analysis
-│   ├── table5_vix_stress.tex          # VIX stress analysis
-│   ├── figure1–16*.png               # All figures
-│   └── *.csv                          # Intermediate data files
+├── Output/                       # Generated outputs (see detailed list below)
+│   ├── writeup.pdf              # Main submission document
+│   ├── writeup_v2.pdf           # Extended version
+│   ├── table1–8*.tex            # LaTeX tables
+│   ├── figure1–16*.png          # All figures
+│   ├── merged_fomc_data.csv     # Master merged dataset
+│   └── task*_*.csv              # Intermediate results
 │
 └── Scripts (executed by run_all.py):
-    ├── task1_data_preparation.py  # Merge MPS, FX, yields
-    ├── task1_visualizations.py    # Summary stat figures
-    ├── task2_regressions.py       # Event-study regressions
-    ├── task3_panel_regression.py  # NFA × surprise interaction
-    ├── task4_time_variation.py    # Post-GFC regime analysis
-    ├── task4b_vix_stress.py       # VIX stress interaction
+    ├── task1_data_preparation.py  # Merge MPS, FX, yields, NFA
+    ├── task1_visualizations.py    # Summary stat figures (fig 1-6)
+    ├── task2_regressions.py       # Event-study regressions (fig 7-9)
+    ├── task3_panel_regression.py  # NFA × surprise panel (fig 10-12)
+    ├── task4_time_variation.py    # Post-GFC regime (fig 13-14)
+    ├── task4b_vix_stress.py       # VIX stress interaction (fig 15-16)
     └── check_*.py, analyze_*.py   # Validation & diagnostics
 ```
 
@@ -113,21 +112,63 @@ MIT Coding Challenge/
 ## Output Files
 
 ### Tables (LaTeX)
+
 | File | Description |
 |------|-------------|
-| `table1_summary_stats.tex` | Summary statistics for all variables |
-| `table2_regression_results.tex` | Event-study regression coefficients |
-| `table3_panel_regression.tex` | NFA × Surprise panel regression |
-| `table4_time_variation.tex` | Post-GFC regime analysis |
-| `table5_vix_stress.tex` | VIX stress interaction |
+| `table1_summary_stats.tex` | Summary statistics: MP surprises (STMT, MP1), NFA/GDP by country |
+| `table2_regression_results.tex` | Panel A: Treasury yield responses; Panel B: Breakeven inflation; Panel C: FX spot returns |
+| `table2a_nfa_by_country.tex` | NFA/GDP values by country (creditor/debtor classification) |
+| `table2b_treasury_response.tex` | Treasury yield responses to STMT (2Y, 5Y, 10Y maturities) |
+| `table2c_fx_response.tex` | Currency-by-currency FX responses to monetary surprises |
+| `table3_nfa_panel.tex` | Panel regression: Surprise × NFA interaction with clustering variants |
+| `table4_time_variation.tex` | Post-GFC triple interaction (Surprise × NFA × Post2008) |
+| `table5_vix_stress.tex` | VIX stress triple interaction (Surprise × NFA × HighVIX) |
+| `table8_placebo.tex` | Placebo test: Non-FOMC date regressions |
+
+### Intermediate Data (CSV)
+
+| File | Description |
+|------|-------------|
+| `merged_fomc_data.csv` | Master dataset: FOMC dates with surprises, FX returns, yields, NFA |
+| `summary_statistics.csv` | Computed summary stats for all variables |
+| `task2_regression_results.csv` | Event-study coefficients (all assets) |
+| `task2_country_betas.csv` | Currency-specific β estimates (STMT) |
+| `task2_country_betas_mp1.csv` | Currency-specific β estimates (MP1) |
+| `task3_panel_data.csv` | Panel-formatted data for NFA regressions |
+| `task3_nfa_panel_results.csv` | Panel regression coefficient estimates |
+| `task3_marginal_effects.csv` | Marginal effects across NFA distribution |
+| `task4_time_variation_results.csv` | Post-GFC regime coefficient estimates |
+| `task4b_vix_stress_results.csv` | VIX stress interaction estimates |
+| `placebo_results.csv` | Placebo test results |
 
 ### Figures (PNG)
+
 | File | Description |
 |------|-------------|
-| `figure1–9` | Task 1–2 visualizations |
-| `figure10–12` | Task 3 NFA interaction plots |
-| `figure13–14` | Task 4a time variation plots |
-| `figure15–16` | Task 4b VIX stress plots |
+| `figure1_surprise_timeseries.png` | Time series of STMT and MP1 surprises (1994–2024) |
+| `figure2_correlation_heatmap.png` | Correlation matrix across all surprise measures |
+| `figure3_surprise_distributions.png` | Histograms of STMT and MP1 distributions |
+| `figure4_stmt_validation.png` | Scatter: STMT vs. 2Y Treasury yield change |
+| `figure5_event_scatter.png` | Event scatter plots for key announcements |
+| `figure6_volatility_by_period.png` | Surprise volatility by decade |
+| `figure7_term_structure.png` | Term structure of yield responses (2Y→10Y) |
+| `figure8_fx_heterogeneity.png` | Cross-currency FX response heterogeneity |
+| `figure9_coefficient_plot.png` | Coefficient plot with 95% CIs (all currencies) |
+| `figure10_betas_vs_nfa.png` | Scatter: Currency β vs. NFA/GDP (STMT) |
+| `figure10b_betas_vs_nfa_both.png` | Scatter: Currency β vs. NFA/GDP (STMT + MP1) |
+| `figure11_marginal_effects.png` | Marginal effect of surprise across NFA distribution |
+| `figure12_predicted_responses.png` | Predicted FX responses by NFA decile |
+| `figure13_time_variation.png` | Pre- vs. Post-GFC coefficient comparison |
+| `figure14_coefficient_comparison.png` | NFA interaction coefficient: pre vs. post 2008 |
+| `figure15_vix_stress.png` | VIX time series with stress episodes highlighted |
+| `figure16_vix_coefficient_comparison.png` | NFA interaction: normal vs. high-VIX regimes |
+
+### Writeup Documents (PDF)
+
+| File | Description |
+|------|-------------|
+| `writeup.pdf` | **Main submission** (~5 pages text + tables/figures at end) |
+| `writeup_v2.pdf` | Extended version (27 pages) with additional robustness checks |
 
 ---
 
@@ -145,6 +186,8 @@ MIT Coding Challenge/
 
 ## References
 
+- Acosta, M., Ajello, A., Bauer, M., Loria, F., & Miranda-Agrippino, S. (2025). Financial Market Effects of FOMC Communication: Evidence from a New Event-Study Database. FRB San Francisco Working Paper 2025-30.
+- Antol´ın-D´ıaz, J., Cenedese, G., Han, S., & Sarno, L. (2023). U.S. Interest Rate Surprises and Currency Returns. SSRN Working Paper
 - Bauer, M. D., & Swanson, E. T. (2022). "A Reassessment of Monetary Policy Surprises and High-Frequency Identification." *NBER Macroeconomics Annual*, 37.
 - Bruno, V., & Shin, H. S. (2015). "Cross-border Banking and Global Liquidity." *Review of Economic Studies*, 82(2), 535–564.
 - Lane, P. R., & Milesi-Ferretti, G. M. (2018). "The External Wealth of Nations Revisited." *IMF Economic Review*, 66(1), 189–222.
@@ -154,5 +197,5 @@ MIT Coding Challenge/
 
 ## Author
 
-Trenton O'Bannon  
+Trenton Eugene O'Bannon  
 MIT Coding Challenge Submission

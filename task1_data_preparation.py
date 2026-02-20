@@ -10,8 +10,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
+
 # Create output directory
-os.makedirs('/Users/trentonobannontrenton/MIT Coding Challenge/Output', exist_ok=True)
+os.makedirs(os.path.join(BASE, 'Output'), exist_ok=True)
 
 print("="*80)
 print("TASK 1: DATA PREPARATION AND MERGING")
@@ -25,11 +28,11 @@ print("STEP 1: Loading Monetary Policy Surprises")
 print("="*80)
 
 # Primary measure: STMT from mps.csv
-mps = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Data/monetary-policy-surprises/mps.csv')
+mps = pd.read_csv(os.path.join(BASE, 'Data/monetary-policy-surprises/mps.csv'))
 mps['Date'] = pd.to_datetime(mps['Date'])
 
 # Also load USMPD for MP1/MP2 (robustness)
-usmpd = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', 
+usmpd = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), 
                       sheet_name='Statements')
 usmpd['Date'] = pd.to_datetime(usmpd['Date'])
 
@@ -51,7 +54,7 @@ print("\n" + "="*80)
 print("STEP 2: Loading Exchange Rates")
 print("="*80)
 
-fx = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/Exchange_Rates.xlsx', 
+fx = pd.read_excel(os.path.join(BASE, 'Data/Exchange_Rates.xlsx'), 
                    sheet_name='Daily')
 fx['Date'] = pd.to_datetime(fx['observation_date'])
 fx = fx.sort_values('Date')
@@ -92,7 +95,7 @@ print("STEP 3: Loading Treasury Yields")
 print("="*80)
 
 # Historical data
-treasury_hist = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Data/par-yield-curve-rates-1990-2023.csv')
+treasury_hist = pd.read_csv(os.path.join(BASE, 'Data/par-yield-curve-rates-1990-2023.csv'))
 treasury_hist['Date'] = pd.to_datetime(treasury_hist['date'])
 treasury_hist = treasury_hist.rename(columns={
     '2 yr': 'UST_2Y', '5 yr': 'UST_5Y', '10 yr': 'UST_10Y'
@@ -100,9 +103,9 @@ treasury_hist = treasury_hist.rename(columns={
 
 # Recent data (2024-2026)
 treasury_files = [
-    '/Users/trentonobannontrenton/MIT Coding Challenge/Data/daily-treasury-rates 2024.csv',
-    '/Users/trentonobannontrenton/MIT Coding Challenge/Data/daily-treasury-rates 2025.csv',
-    '/Users/trentonobannontrenton/MIT Coding Challenge/Data/daily-treasury-rates 2026.csv'
+    os.path.join(BASE, 'Data/daily-treasury-rates 2024.csv'),
+    os.path.join(BASE, 'Data/daily-treasury-rates 2025.csv'),
+    os.path.join(BASE, 'Data/daily-treasury-rates 2026.csv')
 ]
 
 treasury_recent_list = []
@@ -139,7 +142,7 @@ print("STEP 4: Loading Breakeven Inflation")
 print("="*80)
 
 # 10Y Breakeven
-be10 = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/10-Year Breakeven Inflation Rate.xlsx',
+be10 = pd.read_excel(os.path.join(BASE, 'Data/10-Year Breakeven Inflation Rate.xlsx'),
                      sheet_name='Daily')
 be10['Date'] = pd.to_datetime(be10['observation_date'])
 be10 = be10.rename(columns={'T10YIE': 'BE_10Y'})
@@ -147,7 +150,7 @@ be10 = be10.sort_values('Date')
 be10['d_BE_10Y'] = be10['BE_10Y'].diff() * 100  # in bps
 
 # 5Y Breakeven
-be5 = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/5-Year Breakeven Inflation Rate.xlsx',
+be5 = pd.read_excel(os.path.join(BASE, 'Data/5-Year Breakeven Inflation Rate.xlsx'),
                     sheet_name='Daily')
 be5['Date'] = pd.to_datetime(be5['observation_date'])
 be5 = be5.rename(columns={'T5YIE': 'BE_5Y'})
@@ -236,11 +239,11 @@ print("\nSummary Statistics:")
 print(summary.round(4).to_string())
 
 # Save summary statistics
-summary.round(4).to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/summary_statistics.csv')
+summary.round(4).to_csv(os.path.join(BASE, 'Output/summary_statistics.csv'))
 
 # Also save as LaTeX with better formatting
 latex_summary = summary.round(3)
-latex_summary.to_latex('/Users/trentonobannontrenton/MIT Coding Challenge/Output/table1_summary_stats.tex',
+latex_summary.to_latex(os.path.join(BASE, 'Output/table1_summary_stats.tex'),
                           caption='Summary Statistics: Monetary Policy Surprises and Asset Price Changes on FOMC Days (1994--2026)',
                           label='tab:summary',
                           float_format='%.3f')
@@ -254,7 +257,7 @@ print("\n" + "="*80)
 print("STEP 8: Saving Merged Dataset")
 print("="*80)
 
-merged.to_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/merged_fomc_data.csv', index=False)
+merged.to_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'), index=False)
 print(f"Saved: Output/merged_fomc_data.csv ({len(merged)} rows)")
 
 # ============================================================================

@@ -11,6 +11,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Set style
 plt.style.use('seaborn-v0_8-whitegrid')
@@ -19,7 +23,7 @@ plt.rcParams['savefig.dpi'] = 300
 plt.rcParams['font.size'] = 10
 
 # Load merged data
-merged = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Output/merged_fomc_data.csv')
+merged = pd.read_csv(os.path.join(BASE, 'Output/merged_fomc_data.csv'))
 merged['Date'] = pd.to_datetime(merged['Date'])
 
 print("="*80)
@@ -65,7 +69,7 @@ ax2.xaxis.set_major_locator(mdates.YearLocator(5))
 ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure1_surprise_timeseries.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure1_surprise_timeseries.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure1_surprise_timeseries.png")
@@ -102,7 +106,7 @@ sns.heatmap(corr_matrix,
 ax.set_title('Correlation Matrix: Surprises and Asset Price Changes\n(FOMC Days Only)', 
              fontsize=12, fontweight='bold')
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure2_correlation_heatmap.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure2_correlation_heatmap.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure2_correlation_heatmap.png")
@@ -145,7 +149,7 @@ ax.set_title('MP2 Distribution', fontsize=11, fontweight='bold')
 ax.legend(fontsize=8)
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure3_surprise_distributions.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure3_surprise_distributions.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure3_surprise_distributions.png")
@@ -190,7 +194,7 @@ ax.set_title(f'Validation: STMT vs 2Y Treasury (corr = {corr:.3f})', fontsize=12
 ax.legend(fontsize=9)
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure4_stmt_validation.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure4_stmt_validation.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure4_stmt_validation.png")
@@ -242,7 +246,7 @@ ax.annotate(f'Corr(Δ2Y, Δ10Y) = {corr_2y_10y:.3f}',
             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure5_event_scatter.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure5_event_scatter.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure5_event_scatter.png")
@@ -296,7 +300,7 @@ for i, (n, s1, s2) in enumerate(zip(period_df['N'], period_df['STMT_std'], perio
 
 ax.set_ylim(0, ax.get_ylim()[1] * 1.15)
 plt.tight_layout()
-plt.savefig('/Users/trentonobannontrenton/MIT Coding Challenge/Output/figure6_volatility_by_period.png', 
+plt.savefig(os.path.join(BASE, 'Output/figure6_volatility_by_period.png'), 
             bbox_inches='tight', facecolor='white')
 plt.close()
 print("  Saved: Output/figure6_volatility_by_period.png")

@@ -102,12 +102,11 @@ Several factors may explain the null result:
 
 \subsection*{Hypothesis}
 
-If the NFA channel operates through dollar funding stress, it should strengthen after 2008, when dollar liquidity became central to global finance. I test this by adding a triple interaction:
-\begin{align}
-\Delta e_{i,t} &= \alpha_i + \beta_1 \cdot S_t + \beta_2 \cdot (S_t \times \text{NFA}) \nonumber \\
-&\quad + \beta_3 \cdot (S_t \times \text{NFA} \times \text{Post08}) + \text{controls} + \varepsilon_{i,t}
-\end{align}
-where $S_t$ denotes the surprise and Post08 = 1 for dates after September 15, 2008.\footnote{Lehman bankruptcy; see \citet{bruno2015cross}.}
+If the NFA channel operates through dollar funding stress, it should strengthen after 2008. I test this by adding a triple interaction:
+\[
+\Delta e_{i,t} = \alpha_i + \beta_1 S_t + \beta_2 (S_t \!\times\! \text{NFA}) + \beta_3 (S_t \!\times\! \text{NFA} \!\times\! D_t) + \varepsilon_{i,t}
+\]
+where $S_t$ is the surprise and $D_t = 1$ for dates after September 15, 2008.\footnote{Lehman bankruptcy; see \citet{bruno2015cross}.}
 
 \subsection*{Results}
 
@@ -123,7 +122,7 @@ Given the null results, I assess what effect sizes the data can rule out (Table~
 \section*{Conclusion}
 %==============================================================================
 
-U.S. Treasury yields respond strongly to monetary policy surprises, validating the high-frequency identification strategy. Exchange rate responses are noisy at daily frequency ($R^2 < 1\%$). Net foreign asset positions do not robustly mediate FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. Crucially, this is a \textbf{credible null}: the 95\% confidence interval rules out economically large NFA-mediated effects (those exceeding 20\% of daily FX volatility), bounding the channel's magnitude at practically relevant levels. These results do not reject balance-sheet theory but indicate that NFA/GDP is not a sufficient statistic for currency exposure to U.S. monetary shocks in this sample. Extensions using gross position measures or emerging-market currencies may yield sharper identification. An extended version with additional robustness checks is available in the GitHub repository.
+U.S. Treasury yields respond strongly to monetary policy surprises, validating the high-frequency identification strategy. Exchange rate responses are noisy at daily frequency ($R^2 < 1\%$). Net foreign asset positions do not robustly mediate FX responses---neither unconditionally, post-2008, nor during high-volatility episodes. Crucially, this is a \textbf{credible null}: the 95\% confidence interval rules out economically large NFA-mediated effects (those exceeding 20\% of daily FX volatility), bounding the channel's magnitude at practically relevant levels. These results do not reject balance-sheet theory but indicate that NFA/GDP is not a sufficient statistic for currency exposure to U.S. monetary shocks in this sample. Extensions using gross position measures or emerging-market currencies may yield sharper identification.
 
 %==============================================================================
 \bibliographystyle{apalike}
@@ -150,6 +149,9 @@ Estimating standard errors in finance panel data sets.
 \textit{Review of Financial Studies}, 22(1), 435--480.
 
 \end{thebibliography}
+
+\vspace{1em}
+\noindent\footnotesize\textsuperscript{*}An extended version with additional robustness checks is available in the GitHub repository.
 
 %==============================================================================
 % TABLES

@@ -5,10 +5,14 @@ Compare with mps.csv to understand which measure to use
 
 import pandas as pd
 import numpy as np
+import os
+
+# Base directory (relative to script location)
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Load the Monetary Events sheet which has PC
-me = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Monetary Events')
-mps = pd.read_csv('/Users/trentonobannontrenton/MIT Coding Challenge/Data/monetary-policy-surprises/mps.csv')
+me = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Monetary Events')
+mps = pd.read_csv(os.path.join(BASE, 'Data/monetary-policy-surprises/mps.csv'))
 
 print('='*80)
 print('MONETARY EVENTS SHEET - PC COLUMN ANALYSIS')
@@ -88,7 +92,7 @@ print('VALIDATION: Does STMT really capture monetary policy?')
 print('='*80)
 
 # Load statements sheet for comparison
-stmt_sheet = pd.read_excel('/Users/trentonobannontrenton/MIT Coding Challenge/Data/USMPD.xlsx', sheet_name='Statements')
+stmt_sheet = pd.read_excel(os.path.join(BASE, 'Data/USMPD.xlsx'), sheet_name='Statements')
 stmt_sheet['Date'] = pd.to_datetime(stmt_sheet['Date']).dt.date
 
 # Merge with mps
